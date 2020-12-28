@@ -1,0 +1,34 @@
+<?php
+/**
+ * @var $block \Magento\Checkout\Block\Cart
+ * @var $viewModel \Searchspring\Tracking\ViewModel\CartViewModel
+ */
+?>
+<?php $viewModel = $block->getData('searchspring_cart_view_model'); ?>
+<?php $searchspringSiteId = $block->escapeHtmlAttr($viewModel->getSearchspringSiteId()); ?>
+
+<?php if (!empty($searchspringSiteId) && !empty($this->getQuote()->getItems())): ?>
+    <?php $products = $viewModel->getProducts($this->getQuote()->getItems()); ?>
+    <?php foreach ($products as $product): ?>
+        <script type="text/javascript">
+            require(['prototype'], function () {
+                try {
+                    IntelliSuggest.init({
+                        siteId: '<?= $searchspringSiteId ?>',
+                        context: 'Basket',
+                        seed: [
+                            '<?= $product['sku'] ?>'
+                        ]
+                    });
+                    IntelliSuggest.haveItem({
+                        sku:   '<?= $product['sku'] ?>',
+                        qty:   '<?= $product['qty'] ?>',
+                        price: '<?= $product['price'] ?>'
+                    });
+                    IntelliSuggest.inBasket({});
+                } catch (err) {
+                }
+            });
+        </script>
+    <?php endforeach; ?>
+<?php endif; ?>

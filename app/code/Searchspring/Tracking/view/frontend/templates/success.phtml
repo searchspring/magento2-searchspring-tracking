@@ -1,0 +1,28 @@
+<?php
+/**
+ * @var $block \Magento\Checkout\Block\Onepage\Success
+ * @var $viewModel \Searchspring\Tracking\ViewModel\CheckoutViewModel
+ */
+?>
+<?php $viewModel = $block->getData('searchspring_checkout_view_model'); ?>
+<?php $searchspringSiteId = $block->escapeHtmlAttr($viewModel->getSearchspringSiteId()); ?>
+
+<?php if (!empty($searchspringSiteId)): ?>
+    <?php $products = $viewModel->getProducts(); ?>
+    <?php foreach ($products as $product): ?>
+        <script type="text/javascript">
+            try {
+                IntelliSuggest.init({
+                    siteId: '<?= $searchspringSiteId ?>'
+                });
+                IntelliSuggest.haveItem({
+                    sku:   '<?= $product['sku'] ?>',
+                    qty:   '<?= $product['qty'] ?>',
+                    price: '<?= $product['price'] ?>'
+                });
+                IntelliSuggest.inSale({});
+            } catch (e) {
+            }
+        </script>
+    <?php endforeach; ?>
+<?php endif; ?>

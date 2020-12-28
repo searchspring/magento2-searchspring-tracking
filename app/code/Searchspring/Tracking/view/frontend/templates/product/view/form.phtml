@@ -1,0 +1,28 @@
+<?php
+/**
+ * @var $block \Magento\Catalog\Block\Product\View
+ * @var $viewModel \Searchspring\Tracking\ViewModel\PdpViewModel
+ */
+?>
+<?php $_product           = $block->getProduct(); ?>
+<?php $sku                = $_product->getSku(); ?>
+<?php $viewModel          = $block->getData('searchspring_pdp_view_model'); ?>
+<?php $searchspringSiteId = $block->escapeHtmlAttr($viewModel->getSearchspringSiteId()); ?>
+
+<?php if (!empty($searchspringSiteId)): ?>
+<script type="text/javascript">
+    require(['prototype'], function(){
+        try {
+            IntelliSuggest.init({
+                siteId: '<?= $searchspringSiteId ?>',
+                context: 'Product/' + '<?= $sku ?>',
+                seed: [
+                    '<?= $sku ?>'
+                ]});
+            IntelliSuggest.viewItem({
+                sku: '<?= $sku ?>'
+            });
+        } catch(err) {}
+    });
+</script>
+<?php endif; ?>

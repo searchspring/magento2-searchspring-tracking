@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Searchspring\Tracking\Api\GetSearchspringSiteIdInterface"
+                type="Searchspring\Tracking\Service\SearchspringSiteId" />
+
+    <type name="Searchspring\Tracking\Service\PriceResolver">
+        <arguments>
+            <argument name="resolversPool" xsi:type="array">
+                <item name="simple" xsi:type="object">Searchspring\Tracking\Service\SimpleProductPriceResolver</item>
+                <item name="bundle" xsi:type="object">Searchspring\Tracking\Service\BundleProductPriceResolver</item>
+                <item name="grouped" xsi:type="object">Searchspring\Tracking\Service\GroupedProductPriceResolver</item>
+                <item name="configurable" xsi:type="object">Searchspring\Tracking\Service\ConfigurableProductPriceResolver</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
