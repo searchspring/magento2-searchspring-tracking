@@ -33,6 +33,11 @@ class CartViewModel implements ArgumentInterface
     private $skuResolver;
 
     /**
+     * @var array
+     */
+    private $productsSku = [];
+
+    /**
      * CartViewModel constructor.
      *
      * @param Config $getSearchspringSiteId
@@ -64,6 +69,7 @@ class CartViewModel implements ArgumentInterface
      */
     public function getProducts(array $quoteItems): ?array
     {
+        $this->productsSku = [];
         foreach ($quoteItems as $quoteItem) {
             if (!is_null($quoteItem->getParentItem())) {
                 continue;
@@ -71,6 +77,7 @@ class CartViewModel implements ArgumentInterface
             $productsPrice[]['price'] = $this->priceResolver->getProductPrice($quoteItem);
             $productsSku[]['sku'] = $this->skuResolver->getProductSku($quoteItem);
             $productsQty[]['qty'] = $this->getProductQuantity($quoteItem);
+            $this->productsSku[] = $this->skuResolver->getProductSku($quoteItem);
         }
         return array_replace_recursive($productsPrice, $productsSku, $productsQty);
     }
@@ -82,5 +89,13 @@ class CartViewModel implements ArgumentInterface
     private function getProductQuantity(QuoteItem $quoteItem): ?int
     {
         return (int)$quoteItem->getQty();
+    }
+
+    /**
+     * @return array
+     */
+    public function getProductsSku(): array
+    {
+        return $this->productsSku;
     }
 }
