@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace Searchspring\Tracking\Api;
 
 /**
- * Interface SearchspringSiteIdInterface
+ * Interface ConfigInterface
  *
  * @package Searchspring\Tracking\Api
  */
-interface SearchspringSiteIdInterface
+interface ConfigInterface
 {
     /**
      * @return string|null

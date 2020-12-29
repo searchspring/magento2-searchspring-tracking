@@ -5,8 +5,10 @@ namespace Searchspring\Tracking\ViewModel;
 
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-use Searchspring\Tracking\Service\SearchspringSiteId;
+use Magento\Quote\Model\Quote\Item as QuoteItem;
+use Searchspring\Tracking\Service\Config;
 use Searchspring\Tracking\Service\PriceResolver;
+use Searchspring\Tracking\Service\SkuResolver;
 
 /**
  * Class CartViewModel
@@ -16,7 +18,7 @@ use Searchspring\Tracking\Service\PriceResolver;
 class CartViewModel implements ArgumentInterface
 {
     /**
-     * @var SearchspringSiteId
+     * @var Config
      */
     private $getSearchspringSiteId;
 
@@ -26,17 +28,25 @@ class CartViewModel implements ArgumentInterface
     private $priceResolver;
 
     /**
+     * @var SkuResolver
+     */
+    private $skuResolver;
+
+    /**
      * CartViewModel constructor.
      *
-     * @param SearchspringSiteId $getSearchspringSiteId
+     * @param Config $getSearchspringSiteId
      * @param PriceResolver $priceResolver
+     * @param SkuResolver $skuResolver
      */
     public function __construct(
-        SearchspringSiteId $getSearchspringSiteId,
-        PriceResolver $priceResolver
+        Config $getSearchspringSiteId,
+        PriceResolver $priceResolver,
+        SkuResolver $skuResolver
     ) {
         $this->getSearchspringSiteId = $getSearchspringSiteId;
         $this->priceResolver = $priceResolver;
+        $this->skuResolver = $skuResolver;
     }
 
     /**
@@ -54,43 +64,23 @@ class CartViewModel implements ArgumentInterface
      */
     public function getProducts(array $quoteItems): ?array
     {
-        $productsPrice = $this->priceResolver->getProductPrice($quoteItems);
-        $productsSku = $this->getProductSkuByType($quoteItems);
-        $productsQty = $this->getProductQuantity($quoteItems);
+        foreach ($quoteItems as $quoteItem) {
+            if (!is_null($quoteItem->getParentItem())) {
+                continue;
+            }
+            $productsPrice[]['price'] = $this->priceResolver->getProductPrice($quoteItem);
+            $productsSku[]['sku'] = $this->skuResolver->getProductSku($quoteItem);
+            $productsQty[]['qty'] = $this->getProductQuantity($quoteItem);
+        }
         return array_replace_recursive($productsPrice, $productsSku, $productsQty);
     }
 
     /**
-     * @param $quoteItems
-     * @return array|null
+     * @param QuoteItem $quoteItem
+     * @return int|null
      */
-    private function getProductSkuByType($quoteItems): ?array
+    private function getProductQuantity(QuoteItem $quoteItem): ?int
     {
-        $productTypes = [
-            PriceResolver::TYPE_BUNDLE,
-            PriceResolver::TYPE_CONFIGURABLE
-        ];
-        foreach ($quoteItems as $quoteItem) {
-            if ($quoteItem->getProductType() === 'grouped') {
-                $productsSku[]['sku'] = $quoteItem->getOptionsByCode('product_type')['product_type']->getProduct()->getSku();
-            } elseif ($quoteItem->getProductType() === 'simple') {
-                $productsSku[]['sku'] = $quoteItem->getSku();
-            } elseif (in_array($quoteItem->getProductType(), $productTypes)) {
-                $productsSku[]['sku'] = $quoteItem->getOptionsByCode('product_type')['info_buyRequest']->getItem()->getData()['product']->getData('sku');
-            }
-        }
-        return $productsSku;
-    }
-
-    /**
-     * @param array $quoteItems
-     * @return array|null
-     */
-    private function getProductQuantity(array $quoteItems): ?array
-    {
-        foreach ($quoteItems as $quoteItem) {
-            $productsQty[]['qty'] = (int)$quoteItem->getQty();
-        }
-        return $productsQty;
+        return (int)$quoteItem->getQty();
     }
 }

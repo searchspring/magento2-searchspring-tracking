@@ -7,11 +7,11 @@ use Magento\Quote\Model\Quote\Item as QuoteItem;
 use Magento\Sales\Model\Order\Item as OrderItem;
 
 /**
- * Class BundleProductPriceResolver
+ * Class ProductPriceResolver
  *
  * @package Searchspring\Tracking\Service
  */
-class BundleProductPriceResolver implements PriceResolverInterface
+class ProductPriceResolver implements PriceResolverInterface
 {
     /**
      * @param OrderItem|QuoteItem $product
@@ -19,6 +19,7 @@ class BundleProductPriceResolver implements PriceResolverInterface
      */
     public function getProductPrice($product): ?float
     {
-        return (float)$product->getPrice();
+        $qty = !is_null($product->getQty()) ? (int)$product->getQty() : (int)$product->getQtyOrdered();
+        return (float)$product->getProduct()->getFinalPrice($qty);
     }
 }

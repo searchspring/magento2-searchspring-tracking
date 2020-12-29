@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace Searchspring\Tracking\Service;
 
+use Magento\Quote\Model\Quote\Item as QuoteItem;
+use Magento\Sales\Model\Order\Item as OrderItem;
+
 /**
  * Class PriceResolver
  *
@@ -18,32 +21,39 @@ class PriceResolver
     /**
      * @var array
      */
-    private $resolversPool;
+    private $priceResolversPool;
 
     /**
      * PriceResolver constructor.
      *
-     * @param array $resolversPool
+     * @param array $priceResolversPool
      */
     public function __construct(
-        $resolversPool = []
+        $priceResolversPool = []
     ) {
-        $this->resolversPool = $resolversPool;
+        $this->priceResolversPool = $priceResolversPool;
     }
 
     /**
-     * @param array $products
-     * @return array|null
+     * @param OrderItem|QuoteItem $product
+     * @return float|null
      */
-    public function getProductPrice(array $products): ?array
+    public function getProductPrice($product): ?float
     {
-        foreach ($products as $product) {
-            $qty = !is_null($product->getQty()) ? (int)$product->getQty() : (int)$product->getQtyOrdered();
-            if (isset($this->resolversPool[$product->getProductType()]) &&
-                $this->resolversPool[$product->getProductType()] instanceof PriceResolverInterface) {
-                $result[]['price'] = $this->resolversPool[$product->getProductType()]->getProductPrice($product) * $qty;
-            }
+        if (isset($this->priceResolversPool[$product->getProductType()]) &&
+                $this->priceResolversPool[$product->getProductType()] instanceof PriceResolverInterface) {
+            return (float)$this->priceResolversPool[$product->getProductType()]->getProductPrice($product);
         }
-        return $result;
+
+        return (float)$this->defaultResolver($product);
+    }
+
+    /**
+     * @param OrderItem|QuoteItem $product
+     * @return float|null
+     */
+    public function defaultResolver($product): ?float
+    {
+        return (float)$product->getProduct()->getFinalPrice();
     }
 }

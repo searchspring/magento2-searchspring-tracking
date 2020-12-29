@@ -5,7 +5,7 @@ namespace Searchspring\Tracking\ViewModel;
 
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-use Searchspring\Tracking\Service\SearchspringSiteId;
+use Searchspring\Tracking\Service\Config;
 
 /**
  * Class PdpViewModel
@@ -15,17 +15,17 @@ use Searchspring\Tracking\Service\SearchspringSiteId;
 class PdpViewModel implements ArgumentInterface
 {
     /**
-     * @var SearchspringSiteId
+     * @var Config
      */
     private $getSearchspringSiteId;
 
     /**
      * PdpViewModel constructor.
      *
-     * @param SearchspringSiteId $getSearchspringSiteId
+     * @param Config $getSearchspringSiteId
      */
     public function __construct(
-        SearchspringSiteId $getSearchspringSiteId
+        Config $getSearchspringSiteId
     ) {
         $this->getSearchspringSiteId = $getSearchspringSiteId;
     }

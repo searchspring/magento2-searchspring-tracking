@@ -3,17 +3,18 @@ declare(strict_types=1);
 
 namespace Searchspring\Tracking\ViewModel;
 
-use Magento\Catalog\Model\ProductRepository;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-use Searchspring\Tracking\Service\SearchspringSiteId;
+use Magento\Sales\Model\Order\Item as OrderItem;
+use Searchspring\Tracking\Service\Config;
 use Searchspring\Tracking\Service\PriceResolver;
+use Searchspring\Tracking\Service\SkuResolver;
 
 class CheckoutViewModel implements ArgumentInterface
 {
     /**
-     * @var SearchspringSiteId
+     * @var Config
      */
     private $getSearchspringSiteId;
 
@@ -28,20 +29,28 @@ class CheckoutViewModel implements ArgumentInterface
     private $checkoutSession;
 
     /**
-     * @var ProductRepository
+     * @var SkuResolver
      */
-    private $productRepository;
+    private $skuResolver;
 
+    /**
+     * CheckoutViewModel constructor.
+     *
+     * @param Config $getSearchspringSiteId
+     * @param PriceResolver $priceResolver
+     * @param Session $checkoutSession
+     * @param SkuResolver $skuResolver
+     */
     public function __construct(
-        SearchspringSiteId $getSearchspringSiteId,
+        Config $getSearchspringSiteId,
         PriceResolver $priceResolver,
         Session $checkoutSession,
-        ProductRepository $productRepository
+        SkuResolver $skuResolver
     ) {
         $this->getSearchspringSiteId = $getSearchspringSiteId;
         $this->priceResolver = $priceResolver;
         $this->checkoutSession = $checkoutSession;
-        $this->productRepository = $productRepository;
+        $this->skuResolver = $skuResolver;
     }
 
     /**
@@ -49,7 +58,7 @@ class CheckoutViewModel implements ArgumentInterface
      */
     private function getOrderItems(): ?array
     {
-        return $this->checkoutSession->getLastRealOrder()->getAllVisibleItems();
+        return $this->checkoutSession->getLastRealOrder()->getAllItems();
     }
 
     /**
@@ -63,55 +72,27 @@ class CheckoutViewModel implements ArgumentInterface
 
     /**
      * @return array|null
-     * @throws NoSuchEntityException
      */
     public function getProducts(): ?array
     {
         $orderItems = $this->getOrderItems();
-        $productsPrice = $this->priceResolver->getProductPrice($orderItems);
-        $productsSku = $this->getProductSkuByType($orderItems);
-        $productsQty = $this->getProductQuantity($orderItems);
+        foreach ($orderItems as $orderItem) {
+            if (!is_null($orderItem->getParentItem())) {
+                continue;
+            }
+            $productsPrice[]['price'] = $this->priceResolver->getProductPrice($orderItem);
+            $productsSku[]['sku'] = $this->skuResolver->getProductSku($orderItem);
+            $productsQty[]['qty'] = $this->getProductQuantity($orderItem);
+        }
         return array_replace_recursive($productsPrice, $productsSku, $productsQty);
     }
 
     /**
-     * @param $orderItems
-     * @return array|null
-     * @throws NoSuchEntityException
+     * @param OrderItem $orderItem
+     * @return int|null
      */
-    private function getProductSkuByType($orderItems): ?array
+    private function getProductQuantity(OrderItem $orderItem): ?int
     {
-        $productTypes = [
-            PriceResolver::TYPE_BUNDLE,
-            PriceResolver::TYPE_CONFIGURABLE
-        ];
-        foreach ($orderItems as $orderItem) {
-            if ($orderItem->getProductType() === 'simple') {
-                $productsSku[]['sku'] = $orderItem->getSku();
-            } elseif ($orderItem->getProductType() === 'grouped') {
-                $productsSku[]['sku'] = $this->productRepository->getById((int)$orderItem->getProductOptions()['super_product_config']['product_id'])->getSku();
-            } elseif (in_array($orderItem->getProductType(), $productTypes)) {
-                $productsSku[]['sku'] = $this->productRepository->getById($orderItem->getProductId())->getSku();
-            }
-        }
-        return $productsSku;
-    }
-
-    /**
-     * @param array $orderItems
-     * @return array|null
-     */
-    private function getProductQuantity(array $orderItems): ?array
-    {
-        $skipedProducts = [
-            'virtual', 'downloadable'
-        ];
-        foreach ($orderItems as $orderItem) {
-            if (in_array($orderItem->getProductType(), $skipedProducts)) {
-                continue;
-            }
-            $productsQty[]['qty'] = (int)$orderItem->getQtyOrdered();
-        }
-        return $productsQty;
+        return (int)$orderItem->getQtyOrdered();
     }
 }

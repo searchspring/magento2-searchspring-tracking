@@ -7,18 +7,18 @@ use Magento\Quote\Model\Quote\Item as QuoteItem;
 use Magento\Sales\Model\Order\Item as OrderItem;
 
 /**
- * Class BundleProductPriceResolver
+ * Class ProductSkuResolver
  *
  * @package Searchspring\Tracking\Service
  */
-class BundleProductPriceResolver implements PriceResolverInterface
+class ProductSkuResolver implements SkuResolverInterface
 {
     /**
      * @param OrderItem|QuoteItem $product
-     * @return float|null
+     * @return string|null
      */
-    public function getProductPrice($product): ?float
+    public function getProductSku($product): ?string
     {
-        return (float)$product->getPrice();
+        return (string)$product->getProduct()->getData('sku');
     }
 }
