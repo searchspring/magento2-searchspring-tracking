@@ -45,15 +45,6 @@ class PriceResolver
             return (float)$this->priceResolversPool[$product->getProductType()]->getProductPrice($product);
         }
 
-        return (float)$this->defaultResolver($product);
-    }
-
-    /**
-     * @param OrderItem|QuoteItem $product
-     * @return float|null
-     */
-    public function defaultResolver($product): ?float
-    {
         return (float)$product->getProduct()->getFinalPrice();
     }
 }

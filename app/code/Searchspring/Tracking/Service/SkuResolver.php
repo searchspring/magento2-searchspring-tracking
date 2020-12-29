@@ -45,15 +45,6 @@ class SkuResolver
             return (string)$this->skuResolversPool[$product->getProductType()]->getProductSku($product);
         }
 
-        return (string)$this->defaultResolver($product);
-    }
-
-    /**
-     * @param OrderItem|QuoteItem $product
-     * @return string|null
-     */
-    public function defaultResolver($product): ?string
-    {
         return (string)$product->getSku();
     }
 }
