@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Searchspring\Tracking\Api\GetSearchspringSiteIdInterface"
+                type="Searchspring\Tracking\Service\Config" />
+
+    <type name="Searchspring\Tracking\Service\PriceResolver">
+        <arguments>
+            <argument name="priceResolversPool" xsi:type="array">
+                <item name="simple" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>
+                <item name="bundle" xsi:type="object">Searchspring\Tracking\Service\BundleProductPriceResolver</item>
+                <item name="grouped" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>
+                <item name="configurable" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>
+                <item name="virtual" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Searchspring\Tracking\Service\SkuResolver">
+        <arguments>
+            <argument name="skuResolversPool" xsi:type="array">
+                <item name="simple" xsi:type="object">Searchspring\Tracking\Service\ProductSkuResolver</item>
+                <item name="bundle" xsi:type="object">Searchspring\Tracking\Service\ProductSkuResolver</item>
+                <item name="grouped" xsi:type="object">Searchspring\Tracking\Service\GroupedProductSkuResolver</item>
+                <item name="configurable" xsi:type="object">Searchspring\Tracking\Service\ProductSkuResolver</item>
+                <item name="virtual" xsi:type="object">Searchspring\Tracking\Service\ProductSkuResolver</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Model\Session">
+        <arguments>
+            <argument name="lazyLoad" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+</config>

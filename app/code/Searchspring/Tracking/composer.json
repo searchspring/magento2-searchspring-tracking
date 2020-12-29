@@ -1,0 +1,12 @@
+{
+    "name": "searchspring/magento-2.x-extension-v1-tracking",
+    "description": "N/A",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Searchspring\\Tracking\\": ""
+        }
+    }
+}

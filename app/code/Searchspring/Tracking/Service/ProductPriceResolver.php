@@ -19,7 +19,6 @@ class ProductPriceResolver implements PriceResolverInterface
      */
     public function getProductPrice($product): ?float
     {
-        $qty = !is_null($product->getQty()) ? (int)$product->getQty() : (int)$product->getQtyOrdered();
-        return (float)$product->getProduct()->getFinalPrice($qty);
+        return (float)$product->getProduct()->getFinalPrice();
     }
 }
