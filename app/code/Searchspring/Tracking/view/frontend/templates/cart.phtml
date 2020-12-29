@@ -9,7 +9,7 @@
 
 <?php if (!empty($searchspringSiteId) && !empty($this->getQuote()->getItems())): ?>
     <script type="text/javascript">
-        require(['intelliSugest'],function() {
+        require(['intelliSuggest'],function() {
             <?php $products = $viewModel->getProducts($this->getQuote()->getItems()); ?>
             try {
                 IntelliSuggest.init({
