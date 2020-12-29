@@ -7,22 +7,22 @@
 <?php $viewModel = $block->getData('searchspring_checkout_view_model'); ?>
 <?php $searchspringSiteId = $block->escapeHtmlAttr($viewModel->getSearchspringSiteId()); ?>
 
-<script type="text/javascript">
-    <?php if (!empty($searchspringSiteId)): ?>
-    <?php $products = $viewModel->getProducts(); ?>
-    try {
-        IntelliSuggest.init({
-            siteId: '<?= $searchspringSiteId ?>'
-        });
-        <?php foreach ($products as $product): ?>
-        IntelliSuggest.haveItem({
-            sku: '<?= $product['sku'] ?>',
-            qty: '<?= $product['qty'] ?>',
-            price: '<?= $product['price'] ?>'
-        });
-        <?php endforeach; ?>
-        IntelliSuggest.inSale({});
-    } catch (e) {
-    }
-    <?php endif; ?>
-</script>
+<?php if (!empty($searchspringSiteId)): ?>
+    <script type="text/javascript">
+        <?php $products = $viewModel->getProducts(); ?>
+        try {
+            IntelliSuggest.init({
+                siteId: '<?= $searchspringSiteId ?>'
+            });
+            <?php foreach ($products as $product): ?>
+            IntelliSuggest.haveItem({
+                sku: '<?= $product['sku'] ?>',
+                qty: '<?= $product['qty'] ?>',
+                price: '<?= $product['price'] ?>'
+            });
+            <?php endforeach; ?>
+            IntelliSuggest.inSale({});
+        } catch (e) {
+        }
+    </script>
+<?php endif; ?>
