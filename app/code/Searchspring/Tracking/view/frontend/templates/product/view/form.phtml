@@ -11,18 +11,20 @@
 
 <?php if (!empty($searchspringSiteId)): ?>
     <script type="text/javascript">
-        try {
-            IntelliSuggest.init({
-                siteId: '<?= $searchspringSiteId ?>',
-                context: 'Product/' + '<?= $sku ?>',
-                seed: [
-                    '<?= $sku ?>'
-                ]
-            });
-            IntelliSuggest.viewItem({
-                sku: '<?= $sku ?>'
-            });
-        } catch (err) {
-        }
+        require(['intelliSugest'],function() {
+            try {
+                IntelliSuggest.init({
+                    siteId: '<?= $searchspringSiteId ?>',
+                    context: 'Product/' + '<?= $sku ?>',
+                    seed: [
+                        '<?= $sku ?>'
+                    ]
+                });
+                IntelliSuggest.viewItem({
+                    sku: '<?= $sku ?>'
+                });
+            } catch (err) {
+            }
+        });
     </script>
 <?php endif; ?>

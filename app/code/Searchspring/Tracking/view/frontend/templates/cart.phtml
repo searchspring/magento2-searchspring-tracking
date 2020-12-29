@@ -9,30 +9,32 @@
 
 <?php if (!empty($searchspringSiteId) && !empty($this->getQuote()->getItems())): ?>
     <script type="text/javascript">
-        <?php $products = $viewModel->getProducts($this->getQuote()->getItems()); ?>
-        try {
-            IntelliSuggest.init({
-                siteId: '<?= $searchspringSiteId ?>',
-                context: 'Basket',
-                seed: [
-                    <?php foreach ($viewModel->getProductsSku() as $index=>$productSku): ?>
-                    <?php if (count($viewModel->getProductsSku()) === $index + 1): ?>
-                    '<?= $productSku ?>'
-                    <?php else: ?>
-                    '<?= $productSku ?>',
-                    <?php endif; ?>
-                    <?php endforeach; ?>
-                ]
-            });
-            <?php foreach ($products as $product): ?>
-            IntelliSuggest.haveItem({
-                sku: '<?= $product['sku'] ?>',
-                qty: '<?= $product['qty'] ?>',
-                price: '<?= $product['price'] ?>'
-            });
-            <?php endforeach; ?>
-            IntelliSuggest.inBasket({});
-        } catch (err) {
-        }
+        require(['intelliSugest'],function() {
+            <?php $products = $viewModel->getProducts($this->getQuote()->getItems()); ?>
+            try {
+                IntelliSuggest.init({
+                    siteId: '<?= $searchspringSiteId ?>',
+                    context: 'Basket',
+                    seed: [
+                        <?php foreach ($viewModel->getProductsSku() as $index=>$productSku): ?>
+                        <?php if (count($viewModel->getProductsSku()) === $index + 1): ?>
+                        '<?= $productSku ?>'
+                        <?php else: ?>
+                        '<?= $productSku ?>',
+                        <?php endif; ?>
+                        <?php endforeach; ?>
+                    ]
+                });
+                <?php foreach ($products as $product): ?>
+                IntelliSuggest.haveItem({
+                    sku: '<?= $product['sku'] ?>',
+                    qty: '<?= $product['qty'] ?>',
+                    price: '<?= $product['price'] ?>'
+                });
+                <?php endforeach; ?>
+                IntelliSuggest.inBasket({});
+            } catch (err) {
+            }
+        });
     </script>
 <?php endif; ?>
