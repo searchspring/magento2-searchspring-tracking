@@ -11,12 +11,12 @@
     <script type="text/x-magento-init">
         {
             "*": {
-            "searchspring-tracking-cart": {
-                "siteId": "<?= $searchspringSiteId ?>",
-                "products": <?= $viewModel->getProducts($this->getQuote()->getItems()) ?>,
-                "sku": <?= $viewModel->getProductsSku() ?>
+                "searchspring-tracking-cart": {
+                    "siteId":  "<?= $searchspringSiteId ?>",
+                    "products": <?= $viewModel->getProducts($this->getQuote()->getItems()) ?>,
+                    "sku":      <?= $viewModel->getProductsSku() ?>
+                }
             }
-        }
         }
     </script>
 <?php endif; ?>

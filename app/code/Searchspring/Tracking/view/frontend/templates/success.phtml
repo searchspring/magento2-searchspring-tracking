@@ -11,11 +11,11 @@
     <script type="text/x-magento-init">
         {
             "*": {
-            "searchspring-tracking-success": {
-                "siteId": "<?= $searchspringSiteId ?>",
-                "products": <?= $viewModel->getProducts() ?>
+                "searchspring-tracking-success": {
+                    "siteId":  "<?= $searchspringSiteId ?>",
+                    "products": <?= $viewModel->getProducts() ?>
+                }
             }
-        }
         }
     </script>
 <?php endif; ?>
