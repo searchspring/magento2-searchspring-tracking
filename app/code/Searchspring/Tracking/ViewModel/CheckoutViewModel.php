@@ -10,6 +10,7 @@ use Magento\Sales\Model\Order\Item as OrderItem;
 use Searchspring\Tracking\Service\Config;
 use Searchspring\Tracking\Service\PriceResolver;
 use Searchspring\Tracking\Service\SkuResolver;
+use Magento\Framework\Serialize\SerializerInterface;
 
 class CheckoutViewModel implements ArgumentInterface
 {
@@ -34,23 +35,31 @@ class CheckoutViewModel implements ArgumentInterface
     private $skuResolver;
 
     /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    /**
      * CheckoutViewModel constructor.
      *
      * @param Config $getSearchspringSiteId
      * @param PriceResolver $priceResolver
      * @param Session $checkoutSession
      * @param SkuResolver $skuResolver
+     * @param SerializerInterface $serializer
      */
     public function __construct(
         Config $getSearchspringSiteId,
         PriceResolver $priceResolver,
         Session $checkoutSession,
-        SkuResolver $skuResolver
+        SkuResolver $skuResolver,
+        SerializerInterface $serializer
     ) {
         $this->getSearchspringSiteId = $getSearchspringSiteId;
         $this->priceResolver = $priceResolver;
         $this->checkoutSession = $checkoutSession;
         $this->skuResolver = $skuResolver;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -71,20 +80,22 @@ class CheckoutViewModel implements ArgumentInterface
     }
 
     /**
-     * @return array|null
+     * @return string|null
      */
-    public function getProducts(): ?array
+    public function getProducts(): ?string
     {
         $orderItems = $this->getOrderItems();
         foreach ($orderItems as $orderItem) {
             if (!is_null($orderItem->getParentItem())) {
                 continue;
             }
-            $productsPrice[]['price'] = $this->priceResolver->getProductPrice($orderItem);
-            $productsSku[]['sku'] = $this->skuResolver->getProductSku($orderItem);
-            $productsQty[]['qty'] = $this->getProductQuantity($orderItem);
+            $products[] = [
+                'price' => $this->priceResolver->getProductPrice($orderItem),
+                'sku'   => $this->skuResolver->getProductSku($orderItem),
+                'qty'   => $this->getProductQuantity($orderItem)
+            ];
         }
-        return array_replace_recursive($productsPrice, $productsSku, $productsQty);
+        return $this->serializer->serialize($products);
     }
 
     /**

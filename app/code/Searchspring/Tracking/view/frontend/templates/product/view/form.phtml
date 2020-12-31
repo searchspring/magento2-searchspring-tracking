@@ -10,21 +10,14 @@
 <?php $searchspringSiteId = $block->escapeHtmlAttr($viewModel->getSearchspringSiteId()); ?>
 
 <?php if (!empty($searchspringSiteId)): ?>
-    <script type="text/javascript">
-        require(['intelliSuggest'],function() {
-            try {
-                IntelliSuggest.init({
-                    siteId: '<?= $searchspringSiteId ?>',
-                    context: 'Product/' + '<?= $sku ?>',
-                    seed: [
-                        '<?= $sku ?>'
-                    ]
-                });
-                IntelliSuggest.viewItem({
-                    sku: '<?= $sku ?>'
-                });
-            } catch (err) {
+    <script type="text/x-magento-init">
+        {
+            "*": {
+            "searchspring-tracking-form": {
+                "siteId": "<?= $searchspringSiteId ?>",
+                "sku": "<?= $sku ?>"
             }
-        });
+        }
+        }
     </script>
 <?php endif; ?>

@@ -43,13 +43,11 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @param null|int $storeId
+     * @param int|null $storeId
      * @return string|null
-     * @throws NoSuchEntityException
      */
-    public function getSearchspringSiteId($storeId = null): ?string
+    public function getSearchspringSiteId(int $storeId = null): ?string
     {
-        $storeId = !is_null($storeId) ? $storeId : $this->storeManager->getStore()->getStoreId();
         return (string)$this->scopeConfig->getValue(
             self::SEARCHSPRING_SITE_ID,
             ScopeInterface::SCOPE_STORE,

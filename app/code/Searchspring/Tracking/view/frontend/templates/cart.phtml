@@ -8,33 +8,15 @@
 <?php $searchspringSiteId = $block->escapeHtmlAttr($viewModel->getSearchspringSiteId()); ?>
 
 <?php if (!empty($searchspringSiteId) && !empty($this->getQuote()->getItems())): ?>
-    <script type="text/javascript">
-        require(['intelliSuggest'],function() {
-            <?php $products = $viewModel->getProducts($this->getQuote()->getItems()); ?>
-            try {
-                IntelliSuggest.init({
-                    siteId: '<?= $searchspringSiteId ?>',
-                    context: 'Basket',
-                    seed: [
-                        <?php foreach ($viewModel->getProductsSku() as $index=>$productSku): ?>
-                        <?php if (count($viewModel->getProductsSku()) === $index + 1): ?>
-                        '<?= $productSku ?>'
-                        <?php else: ?>
-                        '<?= $productSku ?>',
-                        <?php endif; ?>
-                        <?php endforeach; ?>
-                    ]
-                });
-                <?php foreach ($products as $product): ?>
-                IntelliSuggest.haveItem({
-                    sku: '<?= $product['sku'] ?>',
-                    qty: '<?= $product['qty'] ?>',
-                    price: '<?= $product['price'] ?>'
-                });
-                <?php endforeach; ?>
-                IntelliSuggest.inBasket({});
-            } catch (err) {
+    <script type="text/x-magento-init">
+        {
+            "*": {
+            "searchspring-tracking-cart": {
+                "siteId": "<?= $searchspringSiteId ?>",
+                "products": <?= $viewModel->getProducts($this->getQuote()->getItems()) ?>,
+                "sku": <?= $viewModel->getProductsSku() ?>
             }
-        });
+        }
+        }
     </script>
 <?php endif; ?>

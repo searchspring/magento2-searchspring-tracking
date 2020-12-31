@@ -8,23 +8,14 @@
 <?php $searchspringSiteId = $block->escapeHtmlAttr($viewModel->getSearchspringSiteId()); ?>
 
 <?php if (!empty($searchspringSiteId)): ?>
-    <script type="text/javascript">
-        require(['intelliSuggest'],function() {
-            <?php $products = $viewModel->getProducts(); ?>
-            try {
-                IntelliSuggest.init({
-                    siteId: '<?= $searchspringSiteId ?>'
-                });
-                <?php foreach ($products as $product): ?>
-                IntelliSuggest.haveItem({
-                    sku: '<?= $product['sku'] ?>',
-                    qty: '<?= $product['qty'] ?>',
-                    price: '<?= $product['price'] ?>'
-                });
-                <?php endforeach; ?>
-                IntelliSuggest.inSale({});
-            } catch (e) {
+    <script type="text/x-magento-init">
+        {
+            "*": {
+            "searchspring-tracking-success": {
+                "siteId": "<?= $searchspringSiteId ?>",
+                "products": <?= $viewModel->getProducts() ?>
             }
-        });
+        }
+        }
     </script>
 <?php endif; ?>

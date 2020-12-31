@@ -9,6 +9,7 @@ use Magento\Quote\Model\Quote\Item as QuoteItem;
 use Searchspring\Tracking\Service\Config;
 use Searchspring\Tracking\Service\PriceResolver;
 use Searchspring\Tracking\Service\SkuResolver;
+use Magento\Framework\Serialize\SerializerInterface;
 
 /**
  * Class CartViewModel
@@ -33,6 +34,11 @@ class CartViewModel implements ArgumentInterface
     private $skuResolver;
 
     /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    /**
      * @var array
      */
     private $productsSku = [];
@@ -43,20 +49,22 @@ class CartViewModel implements ArgumentInterface
      * @param Config $getSearchspringSiteId
      * @param PriceResolver $priceResolver
      * @param SkuResolver $skuResolver
+     * @param SerializerInterface $serializer
      */
     public function __construct(
         Config $getSearchspringSiteId,
         PriceResolver $priceResolver,
-        SkuResolver $skuResolver
+        SkuResolver $skuResolver,
+        SerializerInterface $serializer
     ) {
         $this->getSearchspringSiteId = $getSearchspringSiteId;
         $this->priceResolver = $priceResolver;
         $this->skuResolver = $skuResolver;
+        $this->serializer = $serializer;
     }
 
     /**
      * @return string|null
-     * @throws NoSuchEntityException
      */
     public function getSearchspringSiteId(): ?string
     {
@@ -65,21 +73,24 @@ class CartViewModel implements ArgumentInterface
 
     /**
      * @param array $quoteItems
-     * @return array|null
+     * @return string|null
      */
-    public function getProducts(array $quoteItems): ?array
+    public function getProducts(array $quoteItems): ?string
     {
         $this->productsSku = [];
         foreach ($quoteItems as $quoteItem) {
             if (!is_null($quoteItem->getParentItem())) {
                 continue;
             }
-            $productsPrice[]['price'] = $this->priceResolver->getProductPrice($quoteItem);
-            $productsSku[]['sku'] = $this->skuResolver->getProductSku($quoteItem);
-            $productsQty[]['qty'] = $this->getProductQuantity($quoteItem);
             $this->productsSku[] = $this->skuResolver->getProductSku($quoteItem);
+
+            $products[] = [
+                'price' => $this->priceResolver->getProductPrice($quoteItem),
+                'sku'   => $this->skuResolver->getProductSku($quoteItem),
+                'qty'   => $this->getProductQuantity($quoteItem)
+            ];
         }
-        return array_replace_recursive($productsPrice, $productsSku, $productsQty);
+        return $this->serializer->serialize($products);
     }
 
     /**
@@ -92,10 +103,10 @@ class CartViewModel implements ArgumentInterface
     }
 
     /**
-     * @return array
+     * @return string|null
      */
-    public function getProductsSku(): array
+    public function getProductsSku(): ?string
     {
-        return $this->productsSku;
+        return $this->serializer->serialize($this->productsSku);
     }
 }
