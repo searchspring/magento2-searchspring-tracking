@@ -4,8 +4,10 @@ define([
     'use strict';
     return function (config) {
         if (!config) return;
-        var sku = config.sku;
+
+        var sku    = config.sku;
         var siteId = config.siteId;
+
         try {
             IntelliSuggest.init({
                 siteId: siteId,
