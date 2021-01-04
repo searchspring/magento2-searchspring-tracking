@@ -1,6 +1,7 @@
 define([
-    'intelliSuggest'
-], function () {
+    'intelliSuggest',
+    'consoleLogger',
+], function (consoleLogger) {
     'use strict';
     return function (config) {
         if (!config) return;
@@ -20,6 +21,7 @@ define([
                 sku: sku
             });
         } catch (err) {
+            consoleLogger.error(err)
         }
     };
 });

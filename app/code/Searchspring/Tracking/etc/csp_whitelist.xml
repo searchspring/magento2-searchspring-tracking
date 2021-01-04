@@ -11,10 +11,5 @@
                 <value id="searchspring_beacon" type="host">https://beacon.searchspring.io/beacon</value>
             </values>
         </policy>
-        <policy id="img-src">
-            <values>
-                <value id="searchspring_img" type="host">*.cloudfront.net</value>
-            </values>
-        </policy>
     </policies>
 </csp_whitelist>

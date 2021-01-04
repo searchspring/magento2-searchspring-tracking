@@ -5,6 +5,7 @@ namespace Searchspring\Tracking\Service;
 
 use Magento\Quote\Model\Quote\Item as QuoteItem;
 use Magento\Sales\Model\Order\Item as OrderItem;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class PriceResolver
@@ -13,10 +14,10 @@ use Magento\Sales\Model\Order\Item as OrderItem;
  */
 class PriceResolver
 {
-    const TYPE_SIMPLE       = 'simple';
+    const TYPE_SIMPLE = 'simple';
     const TYPE_CONFIGURABLE = 'configurable';
-    const TYPE_BUNDLE       = 'bundle';
-    const TYPE_GROUPED      = 'grouped';
+    const TYPE_BUNDLE = 'bundle';
+    const TYPE_GROUPED = 'grouped';
 
     /**
      * @var array
@@ -26,12 +27,15 @@ class PriceResolver
     /**
      * PriceResolver constructor.
      *
+     * @param LoggerInterface $logger
      * @param array $priceResolversPool
      */
     public function __construct(
-        $priceResolversPool = []
+        LoggerInterface $logger,
+        $priceResolversPool = array()
     ) {
         $this->priceResolversPool = $priceResolversPool;
+        $this->logger = $logger;
     }
 
     /**
@@ -40,11 +44,14 @@ class PriceResolver
      */
     public function getProductPrice($product): ?float
     {
-        if (isset($this->priceResolversPool[$product->getProductType()]) &&
-                $this->priceResolversPool[$product->getProductType()] instanceof PriceResolverInterface) {
+        if (!$this->priceResolversPool[$product->getProductType()] instanceof PriceResolverInterface) {
+            $e = new \Exception();
+            $this->logger->warning($e);
+        }
+        if (isset($this->priceResolversPool[$product->getProductType()])) {
             return (float)$this->priceResolversPool[$product->getProductType()]->getProductPrice($product);
         }
-
         return (float)$product->getProduct()->getFinalPrice();
+
     }
 }

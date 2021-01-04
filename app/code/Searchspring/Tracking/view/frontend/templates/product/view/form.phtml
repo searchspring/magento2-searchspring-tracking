@@ -4,8 +4,6 @@
  * @var $viewModel \Searchspring\Tracking\ViewModel\PdpViewModel
  */
 ?>
-<?php $_product = $block->getProduct(); ?>
-<?php $sku = $_product->getSku(); ?>
 <?php $viewModel = $block->getData('searchspring_pdp_view_model'); ?>
 <?php $searchspringSiteId = $block->escapeHtmlAttr($viewModel->getSearchspringSiteId()); ?>
 
@@ -13,9 +11,9 @@
     <script type="text/x-magento-init">
         {
             "*": {
-                "searchspring-tracking-form": {
+                "searchspring-tracking-product-view": {
                     "siteId": "<?= $searchspringSiteId ?>",
-                    "sku":    "<?= $sku ?>"
+                    "sku":    "<?= $block->getProduct()->getSku() ?>"
                 }
             }
         }

@@ -1,7 +1,8 @@
 define([
-    'underscore',
+    'consoleLogger',
+    'itemsTracking',
     'intelliSuggest'
-], function (_) {
+], function (consoleLogger, itemsTracking) {
     'use strict';
     return function (config) {
         if (!config) return;
@@ -16,15 +17,10 @@ define([
                 context: 'Basket',
                 seed: skuArr
             });
-            _.each(productArr, function (item) {
-                IntelliSuggest.haveItem({
-                    sku:   item.sku,
-                    qty:   item.qty,
-                    price: item.price
-                });
-            });
+            itemsTracking(productArr)
             IntelliSuggest.inBasket({});
         } catch (err) {
+            consoleLogger.error(err)
         }
     };
 });

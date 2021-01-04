@@ -7,13 +7,13 @@
 <?php $viewModel = $block->getData('searchspring_cart_view_model'); ?>
 <?php $searchspringSiteId = $block->escapeHtmlAttr($viewModel->getSearchspringSiteId()); ?>
 
-<?php if (!empty($searchspringSiteId) && !empty($this->getQuote()->getItems())): ?>
+<?php if (!empty($searchspringSiteId) && !empty($block->getQuote()->getItems())): ?>
     <script type="text/x-magento-init">
         {
             "*": {
                 "searchspring-tracking-cart": {
                     "siteId":  "<?= $searchspringSiteId ?>",
-                    "products": <?= $viewModel->getProducts($this->getQuote()->getItems()) ?>,
+                    "products": <?= $viewModel->getProducts($block->getQuote()->getItems()) ?>,
                     "sku":      <?= $viewModel->getProductsSku() ?>
                 }
             }
