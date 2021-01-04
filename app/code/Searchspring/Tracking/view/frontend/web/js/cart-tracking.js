@@ -4,6 +4,7 @@ define([
     'intelliSuggest'
 ], function (consoleLogger, itemsTracking) {
     'use strict';
+
     return function (config) {
         if (!config) return;
 

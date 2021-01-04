@@ -3,6 +3,7 @@ define([
     'intelliSuggest'
 ], function (consoleLogger) {
     'use strict';
+
     return function (config) {
         if (!config) return;
 
