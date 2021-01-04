@@ -1,6 +1,6 @@
 define([
-    'intelliSuggest',
     'consoleLogger',
+    'intelliSuggest'
 ], function (consoleLogger) {
     'use strict';
     return function (config) {
