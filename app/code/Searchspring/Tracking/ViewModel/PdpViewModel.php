@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Searchspring\Tracking\ViewModel;
 
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Searchspring\Tracking\Service\Config;
 
@@ -32,7 +31,6 @@ class PdpViewModel implements ArgumentInterface
 
     /**
      * @return string|null
-     * @throws NoSuchEntityException
      */
     public function getSearchspringSiteId(): ?string
     {

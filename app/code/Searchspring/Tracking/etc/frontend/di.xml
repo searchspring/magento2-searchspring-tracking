@@ -11,6 +11,8 @@
                 <item name="grouped" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>
                 <item name="configurable" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>
                 <item name="virtual" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>
+                <item name="downloadable" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>
+                <item name="giftcard" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>
             </argument>
         </arguments>
     </type>
@@ -23,13 +25,9 @@
                 <item name="grouped" xsi:type="object">Searchspring\Tracking\Service\GroupedProductSkuResolver</item>
                 <item name="configurable" xsi:type="object">Searchspring\Tracking\Service\ProductSkuResolver</item>
                 <item name="virtual" xsi:type="object">Searchspring\Tracking\Service\ProductSkuResolver</item>
+                <item name="downloadable" xsi:type="object">Searchspring\Tracking\Service\ProductSkuResolver</item>
+                <item name="giftcard" xsi:type="object">Searchspring\Tracking\Service\ProductSkuResolver</item>
             </argument>
-        </arguments>
-    </type>
-
-    <type name="Magento\Checkout\Model\Session">
-        <arguments>
-            <argument name="lazyLoad" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
         </arguments>
     </type>
 </config>

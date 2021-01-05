@@ -12,34 +12,38 @@ use Psr\Log\LoggerInterface;
  *
  * @package Searchspring\Tracking\Service
  */
-class SkuResolver
+class SkuResolver implements SkuResolverInterface
 {
-    const TYPE_SIMPLE = 'simple';
-    const TYPE_CONFIGURABLE = 'configurable';
-    const TYPE_BUNDLE = 'bundle';
-    const TYPE_GROUPED = 'grouped';
-
     /**
      * @var array
      */
     private $skuResolversPool;
+
     /**
      * @var LoggerInterface
      */
     private $logger;
 
     /**
+     * @var DefaultSkuResolver
+     */
+    private $defaultSkuResolver;
+
+    /**
      * SkuResolver constructor.
      *
      * @param LoggerInterface $logger
+     * @param DefaultSkuResolver $defaultSkuResolver
      * @param array $skuResolversPool
      */
     public function __construct(
         LoggerInterface $logger,
-        $skuResolversPool = array()
+        DefaultSkuResolver $defaultSkuResolver,
+        array $skuResolversPool = []
     ) {
-        $this->skuResolversPool = $skuResolversPool;
-        $this->logger = $logger;
+        $this->logger             = $logger;
+        $this->defaultSkuResolver = $defaultSkuResolver;
+        $this->skuResolversPool   = $skuResolversPool;
     }
 
     /**
@@ -48,13 +52,13 @@ class SkuResolver
      */
     public function getProductSku($product): ?string
     {
-        if (!$this->skuResolversPool[$product->getProductType()] instanceof SkuResolverInterface) {
-            $e = new \Exception();
-            $this->logger->warning($e);
-        }
-        if (isset($this->skuResolversPool[$product->getProductType()])) {
+        if (isset($this->skuResolversPool[$product->getProductType()]) &&
+            $this->skuResolversPool[$product->getProductType()] instanceof SkuResolverInterface) {
             return (string)$this->skuResolversPool[$product->getProductType()]->getProductSku($product);
+        } elseif (!($this->skuResolversPool[$product->getProductType()] instanceof SkuResolverInterface)) {
+            $this->logger->warning(get_class($this->skuResolversPool[$product->getProductType()]) . ' must implement ' . SkuResolverInterface::class);
         }
-        return (string)$product->getSku();
+
+        return (string)$this->defaultSkuResolver->getProductSku($product);
     }
 }

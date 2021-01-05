@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Searchspring\Tracking\ViewModel;
 
 use Magento\Checkout\Model\Session;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Sales\Model\Order\Item as OrderItem;
 use Searchspring\Tracking\Service\Config;
@@ -56,10 +55,10 @@ class CheckoutViewModel implements ArgumentInterface
         SerializerInterface $serializer
     ) {
         $this->getSearchspringSiteId = $getSearchspringSiteId;
-        $this->priceResolver = $priceResolver;
-        $this->checkoutSession = $checkoutSession;
-        $this->skuResolver = $skuResolver;
-        $this->serializer = $serializer;
+        $this->priceResolver         = $priceResolver;
+        $this->checkoutSession       = $checkoutSession;
+        $this->skuResolver           = $skuResolver;
+        $this->serializer            = $serializer;
     }
 
     /**
@@ -72,7 +71,6 @@ class CheckoutViewModel implements ArgumentInterface
 
     /**
      * @return string|null
-     * @throws NoSuchEntityException
      */
     public function getSearchspringSiteId(): ?string
     {

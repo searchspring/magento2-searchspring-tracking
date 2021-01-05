@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Searchspring\Tracking\ViewModel;
 
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Quote\Model\Quote\Item as QuoteItem;
 use Searchspring\Tracking\Service\Config;
@@ -58,9 +57,9 @@ class CartViewModel implements ArgumentInterface
         SerializerInterface $serializer
     ) {
         $this->getSearchspringSiteId = $getSearchspringSiteId;
-        $this->priceResolver = $priceResolver;
-        $this->skuResolver = $skuResolver;
-        $this->serializer = $serializer;
+        $this->priceResolver         = $priceResolver;
+        $this->skuResolver           = $skuResolver;
+        $this->serializer            = $serializer;
     }
 
     /**

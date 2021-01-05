@@ -3,7 +3,7 @@
     <body>
         <referenceContainer name="content">
             <block class="Magento\Checkout\Block\Cart" name="searchspring.checkout.cart"
-                   template="Searchspring_Tracking::cart.phtml" after="checkout.cart">
+                   template="Searchspring_Tracking::cart-tracking.phtml" after="checkout.cart">
                 <arguments>
                     <argument name="searchspring_cart_view_model"
                               xsi:type="object">Searchspring\Tracking\ViewModel\CartViewModel

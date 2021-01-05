@@ -12,30 +12,39 @@ use Psr\Log\LoggerInterface;
  *
  * @package Searchspring\Tracking\Service
  */
-class PriceResolver
+class PriceResolver implements PriceResolverInterface
 {
-    const TYPE_SIMPLE = 'simple';
-    const TYPE_CONFIGURABLE = 'configurable';
-    const TYPE_BUNDLE = 'bundle';
-    const TYPE_GROUPED = 'grouped';
-
     /**
      * @var array
      */
     private $priceResolversPool;
 
     /**
+     * @var DefaultPriceResolver
+     */
+    private $defaultPriceResolver;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+
+    /**
      * PriceResolver constructor.
      *
      * @param LoggerInterface $logger
+     * @param DefaultPriceResolver $defaultPriceResolver
      * @param array $priceResolversPool
      */
     public function __construct(
         LoggerInterface $logger,
-        $priceResolversPool = array()
+        DefaultPriceResolver $defaultPriceResolver,
+        array $priceResolversPool = []
     ) {
-        $this->priceResolversPool = $priceResolversPool;
-        $this->logger = $logger;
+        $this->logger               = $logger;
+        $this->defaultPriceResolver = $defaultPriceResolver;
+        $this->priceResolversPool   = $priceResolversPool;
     }
 
     /**
@@ -44,14 +53,13 @@ class PriceResolver
      */
     public function getProductPrice($product): ?float
     {
-        if (!$this->priceResolversPool[$product->getProductType()] instanceof PriceResolverInterface) {
-            $e = new \Exception();
-            $this->logger->warning($e);
-        }
-        if (isset($this->priceResolversPool[$product->getProductType()])) {
+        if (isset($this->priceResolversPool[$product->getProductType()]) &&
+            $this->priceResolversPool[$product->getProductType()] instanceof PriceResolverInterface) {
             return (float)$this->priceResolversPool[$product->getProductType()]->getProductPrice($product);
+        } elseif (!($this->priceResolversPool[$product->getProductType()] instanceof PriceResolverInterface)) {
+            $this->logger->warning(get_class($this->priceResolversPool[$product->getProductType()]) . ' must implement ' . PriceResolverInterface::class);
         }
-        return (float)$product->getProduct()->getFinalPrice();
 
+        return (float)$this->defaultPriceResolver->getProductPrice($product);
     }
 }
