@@ -11,7 +11,9 @@ use Magento\Sales\Api\Data\OrderItemInterface;
  *
  * @package Searchspring\Tracking\Service
  */
-class DefaultPriceResolver implements PriceResolverInterface
+class DefaultPriceResolver implements
+    QuoteItemPriceResolverInterface,
+    OrderItemPriceResolverInterface
 {
     /**
      * @param CartItemInterface|OrderItemInterface $product

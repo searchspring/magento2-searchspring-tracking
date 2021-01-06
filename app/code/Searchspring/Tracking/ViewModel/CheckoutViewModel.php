@@ -7,7 +7,7 @@ use Magento\Checkout\Model\Session;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Sales\Api\Data\OrderItemInterface;
 use Searchspring\Tracking\Service\Config;
-use Searchspring\Tracking\Service\PriceResolver;
+use Searchspring\Tracking\Service\OrderItemPriceResolver;
 use Searchspring\Tracking\Service\SkuResolver;
 use Magento\Framework\Serialize\SerializerInterface;
 
@@ -19,7 +19,7 @@ class CheckoutViewModel implements ArgumentInterface
     private $getSearchspringSiteId;
 
     /**
-     * @var PriceResolver
+     * @var OrderItemPriceResolver
      */
     private $priceResolver;
 
@@ -42,14 +42,14 @@ class CheckoutViewModel implements ArgumentInterface
      * CheckoutViewModel constructor.
      *
      * @param Config $getSearchspringSiteId
-     * @param PriceResolver $priceResolver
+     * @param OrderItemPriceResolver $priceResolver
      * @param Session $checkoutSession
      * @param SkuResolver $skuResolver
      * @param SerializerInterface $serializer
      */
     public function __construct(
         Config $getSearchspringSiteId,
-        PriceResolver $priceResolver,
+        OrderItemPriceResolver $priceResolver,
         Session $checkoutSession,
         SkuResolver $skuResolver,
         SerializerInterface $serializer

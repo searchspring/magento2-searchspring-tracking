@@ -6,7 +6,7 @@ namespace Searchspring\Tracking\ViewModel;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Quote\Api\Data\CartItemInterface;
 use Searchspring\Tracking\Service\Config;
-use Searchspring\Tracking\Service\PriceResolver;
+use Searchspring\Tracking\Service\QuoteItemPriceResolver;
 use Searchspring\Tracking\Service\SkuResolver;
 use Magento\Framework\Serialize\SerializerInterface;
 
@@ -23,7 +23,7 @@ class CartViewModel implements ArgumentInterface
     private $getSearchspringSiteId;
 
     /**
-     * @var PriceResolver
+     * @var QuoteItemPriceResolver
      */
     private $priceResolver;
 
@@ -46,13 +46,13 @@ class CartViewModel implements ArgumentInterface
      * CartViewModel constructor.
      *
      * @param Config $getSearchspringSiteId
-     * @param PriceResolver $priceResolver
+     * @param QuoteItemPriceResolver $priceResolver
      * @param SkuResolver $skuResolver
      * @param SerializerInterface $serializer
      */
     public function __construct(
         Config $getSearchspringSiteId,
-        PriceResolver $priceResolver,
+        QuoteItemPriceResolver $priceResolver,
         SkuResolver $skuResolver,
         SerializerInterface $serializer
     ) {
