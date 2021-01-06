@@ -70,8 +70,10 @@ class PriceResolver implements PriceResolverInterface
             if ($product instanceof OrderItemInterface) {
                 return (float)$this->orderItemPriceResolversPool[$product->getProductType()]->getProductPrice($product);
             }
-        } elseif (!($this->priceResolversPool[$product->getProductType()] instanceof PriceResolverInterface)) {
-            $this->logger->warning(get_class($this->priceResolversPool[$product->getProductType()]) . ' must implement ' . PriceResolverInterface::class);
+        } elseif (!($this->quoteItemPriceResolversPool[$product->getProductType()] instanceof PriceResolverInterface)) {
+            $this->logger->warning(get_class($this->quoteItemPriceResolversPool[$product->getProductType()]) . ' must implement ' . PriceResolverInterface::class);
+        } elseif (!($this->orderItemPriceResolversPool[$product->getProductType()] instanceof PriceResolverInterface)) {
+            $this->logger->warning(get_class($this->orderItemPriceResolversPool[$product->getProductType()]) . ' must implement ' . PriceResolverInterface::class);
         }
 
         return (float)$this->defaultPriceResolver->getProductPrice($product);
