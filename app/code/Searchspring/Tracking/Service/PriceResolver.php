@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Searchspring\Tracking\Service;
 
-use Magento\Quote\Model\Quote\Item as QuoteItem;
-use Magento\Sales\Model\Order\Item as OrderItem;
+use Magento\Quote\Api\Data\CartItemInterface;
+use Magento\Sales\Api\Data\OrderItemInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -17,7 +17,12 @@ class PriceResolver implements PriceResolverInterface
     /**
      * @var array
      */
-    private $priceResolversPool;
+    private $quoteItemPriceResolversPool;
+
+    /**
+     * @var array
+     */
+    private $orderItemPriceResolversPool;
 
     /**
      * @var DefaultPriceResolver
@@ -29,33 +34,42 @@ class PriceResolver implements PriceResolverInterface
      */
     private $logger;
 
-
     /**
      * PriceResolver constructor.
      *
      * @param LoggerInterface $logger
      * @param DefaultPriceResolver $defaultPriceResolver
-     * @param array $priceResolversPool
+     * @param array $quoteItemPriceResolversPool
+     * @param array $orderItemPriceResolversPool
      */
     public function __construct(
         LoggerInterface $logger,
         DefaultPriceResolver $defaultPriceResolver,
-        array $priceResolversPool = []
+        array $quoteItemPriceResolversPool = [],
+        array $orderItemPriceResolversPool = []
     ) {
         $this->logger               = $logger;
         $this->defaultPriceResolver = $defaultPriceResolver;
-        $this->priceResolversPool   = $priceResolversPool;
+        $this->quoteItemPriceResolversPool   = $quoteItemPriceResolversPool;
+        $this->orderItemPriceResolversPool   = $orderItemPriceResolversPool;
     }
 
     /**
-     * @param OrderItem|QuoteItem $product
+     * @param CartItemInterface|OrderItemInterface $product
      * @return float|null
      */
     public function getProductPrice($product): ?float
     {
-        if (isset($this->priceResolversPool[$product->getProductType()]) &&
-            $this->priceResolversPool[$product->getProductType()] instanceof PriceResolverInterface) {
-            return (float)$this->priceResolversPool[$product->getProductType()]->getProductPrice($product);
+        if ((isset($this->quoteItemPriceResolversPool[$product->getProductType()]) &&
+            $this->quoteItemPriceResolversPool[$product->getProductType()] instanceof PriceResolverInterface) ||
+            (isset($this->orderItemPriceResolversPool[$product->getProductType()]) &&
+            $this->orderItemPriceResolversPool[$product->getProductType()] instanceof PriceResolverInterface)) {
+            if ($product instanceof CartItemInterface) {
+                return (float)$this->quoteItemPriceResolversPool[$product->getProductType()]->getProductPrice($product);
+            }
+            if ($product instanceof OrderItemInterface) {
+                return (float)$this->orderItemPriceResolversPool[$product->getProductType()]->getProductPrice($product);
+            }
         } elseif (!($this->priceResolversPool[$product->getProductType()] instanceof PriceResolverInterface)) {
             $this->logger->warning(get_class($this->priceResolversPool[$product->getProductType()]) . ' must implement ' . PriceResolverInterface::class);
         }

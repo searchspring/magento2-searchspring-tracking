@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Searchspring\Tracking\ViewModel;
 
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-use Magento\Quote\Model\Quote\Item as QuoteItem;
+use Magento\Quote\Api\Data\CartItemInterface;
 use Searchspring\Tracking\Service\Config;
 use Searchspring\Tracking\Service\PriceResolver;
 use Searchspring\Tracking\Service\SkuResolver;
@@ -90,10 +90,10 @@ class CartViewModel implements ArgumentInterface
     }
 
     /**
-     * @param QuoteItem $quoteItem
+     * @param CartItemInterface $quoteItem
      * @return int|null
      */
-    private function getProductQuantity(QuoteItem $quoteItem): ?int
+    private function getProductQuantity(CartItemInterface $quoteItem): ?int
     {
         return (int)$quoteItem->getQty();
     }

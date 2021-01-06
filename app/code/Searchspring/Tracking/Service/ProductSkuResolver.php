@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Searchspring\Tracking\Service;
 
-use Magento\Quote\Model\Quote\Item as QuoteItem;
-use Magento\Sales\Model\Order\Item as OrderItem;
+use Magento\Quote\Api\Data\CartItemInterface;
+use Magento\Sales\Api\Data\OrderItemInterface;
 
 /**
  * Class ProductSkuResolver
@@ -14,11 +14,11 @@ use Magento\Sales\Model\Order\Item as OrderItem;
 class ProductSkuResolver implements SkuResolverInterface
 {
     /**
-     * @param OrderItem|QuoteItem $product
+     * @param CartItemInterface|OrderItemInterface $product
      * @return string|null
      */
     public function getProductSku($product): ?string
     {
-        return (string)$product->getSku();
+        return (string)$product->getProduct()->getData('sku');
     }
 }

@@ -5,7 +5,7 @@ namespace Searchspring\Tracking\ViewModel;
 
 use Magento\Checkout\Model\Session;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
-use Magento\Sales\Model\Order\Item as OrderItem;
+use Magento\Sales\Api\Data\OrderItemInterface;
 use Searchspring\Tracking\Service\Config;
 use Searchspring\Tracking\Service\PriceResolver;
 use Searchspring\Tracking\Service\SkuResolver;
@@ -97,10 +97,10 @@ class CheckoutViewModel implements ArgumentInterface
     }
 
     /**
-     * @param OrderItem $orderItem
+     * @param OrderItemInterface $orderItem
      * @return int|null
      */
-    private function getProductQuantity(OrderItem $orderItem): ?int
+    private function getProductQuantity(OrderItemInterface $orderItem): ?int
     {
         return (int)$orderItem->getQtyOrdered();
     }

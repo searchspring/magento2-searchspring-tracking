@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Searchspring\Tracking\Service;
 
-use Magento\Quote\Model\Quote\Item as QuoteItem;
-use Magento\Sales\Model\Order\Item as OrderItem;
+use Magento\Quote\Api\Data\CartItemInterface;
+use Magento\Sales\Api\Data\OrderItemInterface;
 
 /**
  * Interface PriceResolverInterface
@@ -14,7 +14,7 @@ use Magento\Sales\Model\Order\Item as OrderItem;
 interface PriceResolverInterface
 {
     /**
-     * @param OrderItem|QuoteItem $product
+     * @param CartItemInterface|OrderItemInterface $product
      * @return float|null
      */
     public function getProductPrice($product): ?float;
