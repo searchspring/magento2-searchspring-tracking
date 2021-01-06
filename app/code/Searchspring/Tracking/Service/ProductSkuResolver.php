@@ -19,6 +19,6 @@ class ProductSkuResolver implements SkuResolverInterface
      */
     public function getProductSku($product): ?string
     {
-        return (string)$product->getProduct()->getData('sku');
+        return (string)$product->getSku();
     }
 }

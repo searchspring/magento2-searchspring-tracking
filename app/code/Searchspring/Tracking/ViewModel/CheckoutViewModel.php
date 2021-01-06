@@ -66,7 +66,7 @@ class CheckoutViewModel implements ArgumentInterface
      */
     private function getOrderItems(): ?array
     {
-        return $this->checkoutSession->getLastRealOrder()->getAllItems();
+        return $this->checkoutSession->getLastRealOrder()->getAllVisibleItems();
     }
 
     /**

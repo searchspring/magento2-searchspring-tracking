@@ -7,7 +7,7 @@
         <arguments>
             <argument name="priceResolversPool" xsi:type="array">
                 <item name="simple" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>
-                <item name="bundle" xsi:type="object">Searchspring\Tracking\Service\BundleProductPriceResolver</item>
+                <item name="bundle" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>
                 <item name="grouped" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>
                 <item name="configurable" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>
                 <item name="virtual" xsi:type="object">Searchspring\Tracking\Service\ProductPriceResolver</item>

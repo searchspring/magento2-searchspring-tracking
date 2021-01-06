@@ -13,7 +13,7 @@
             "*": {
                 "searchspring-tracking-cart": {
                     "siteId":  "<?= $searchspringSiteId ?>",
-                    "products": <?= $viewModel->getProducts($block->getQuote()->getItems()) ?>,
+                    "products": <?= $viewModel->getProducts($block->getQuote()->getAllVisibleItems()) ?>,
                     "sku":      <?= $viewModel->getProductsSku() ?>
                 }
             }

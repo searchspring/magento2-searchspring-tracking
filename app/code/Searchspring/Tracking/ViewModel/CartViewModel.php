@@ -78,9 +78,6 @@ class CartViewModel implements ArgumentInterface
     {
         $this->productsSku = [];
         foreach ($quoteItems as $quoteItem) {
-            if (!is_null($quoteItem->getParentItem())) {
-                continue;
-            }
             $this->productsSku[] = $this->skuResolver->getProductSku($quoteItem);
 
             $products[] = [

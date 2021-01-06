@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Searchspring\Tracking\Service;
 
+use Magento\Quote\Api\Data\CartItemInterface;
+use Magento\Sales\Api\Data\OrderItemInterface;
 use Magento\Catalog\Model\ProductRepository;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Model\Quote\Item as QuoteItem;
@@ -33,9 +35,18 @@ class GroupedProductSkuResolver implements SkuResolverInterface
      */
     public function getProductSku($product): ?string
     {
-        $sku = !is_null($product->getOptionByCode('product_type')) ?
-            $product->getOptionByCode('product_type')->getProduct()->getSku() :
-            $this->productRepository->getById((int)$product->getProductOptions()['super_product_config']['product_id'])->getSku();
-        return (string)$sku;
+        if ($product instanceof CartItemInterface) {
+            return (string)$product->getOptionByCode('product_type')
+                                   ->getProduct()
+                                   ->getSku();
+        }
+        if ($product instanceof OrderItemInterface) {
+            return (string)$this->productRepository
+                                ->getById(
+                                    (int)$product
+                                    ->getProductOptions()['super_product_config']['product_id']
+                                )
+                                ->getSku();
+        }
     }
 }

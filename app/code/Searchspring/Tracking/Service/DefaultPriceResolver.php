@@ -19,6 +19,6 @@ class DefaultPriceResolver implements PriceResolverInterface
      */
     public function getProductPrice($product): ?float
     {
-        return (float)$product->getProduct()->getFinalPrice();
+        return (float)$product->getPrice();
     }
 }
