@@ -2,36 +2,44 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Searchspring\Tracking\Api\GetSearchspringSiteIdInterface"
                 type="Searchspring\Tracking\Service\Config" />
+    <preference for="Searchspring\Tracking\Service\QuoteItemPriceResolverInterface"
+                type="Searchspring\Tracking\Service\CompositeQuoteItemPriceResolver" />
+    <preference for="Searchspring\Tracking\Service\OrderItemPriceResolverInterface"
+                type="Searchspring\Tracking\Service\CompositeOrderItemPriceResolver" />
+    <preference for="Searchspring\Tracking\Service\SkuResolverInterface"
+                type="Searchspring\Tracking\Service\CompositeSkuResolver" />
 
-    <type name="Searchspring\Tracking\Service\OrderItemPriceResolver">
+    <type name="Searchspring\Tracking\Service\CompositeOrderItemPriceResolver">
         <arguments>
             <argument name="orderItemPriceResolversPool" xsi:type="array">
-                <item name="simple" xsi:type="object">Searchspring\Tracking\Service\OrderItemPrice</item>
-                <item name="bundle" xsi:type="object">Searchspring\Tracking\Service\OrderItemPrice</item>
-                <item name="grouped" xsi:type="object">Searchspring\Tracking\Service\OrderItemPrice</item>
-                <item name="configurable" xsi:type="object">Searchspring\Tracking\Service\OrderItemPrice</item>
-                <item name="virtual" xsi:type="object">Searchspring\Tracking\Service\OrderItemPrice</item>
-                <item name="downloadable" xsi:type="object">Searchspring\Tracking\Service\OrderItemPrice</item>
-                <item name="giftcard" xsi:type="object">Searchspring\Tracking\Service\OrderItemPrice</item>
+                <item name="simple" xsi:type="object">Searchspring\Tracking\Service\OrderItemPriceResolver</item>
+                <item name="bundle" xsi:type="object">Searchspring\Tracking\Service\OrderItemPriceResolver</item>
+                <item name="grouped" xsi:type="object">Searchspring\Tracking\Service\OrderItemPriceResolver</item>
+                <item name="configurable" xsi:type="object">Searchspring\Tracking\Service\OrderItemPriceResolver</item>
+                <item name="virtual" xsi:type="object">Searchspring\Tracking\Service\OrderItemPriceResolver</item>
+                <item name="downloadable" xsi:type="object">Searchspring\Tracking\Service\OrderItemPriceResolver</item>
+                <item name="giftcard" xsi:type="object">Searchspring\Tracking\Service\OrderItemPriceResolver</item>
             </argument>
+            <argument name="defaultPriceResolver" xsi:type="object">Searchspring\Tracking\Service\OrderItemPriceResolver</argument>
         </arguments>
     </type>
 
-    <type name="Searchspring\Tracking\Service\QuoteItemPriceResolver">
+    <type name="Searchspring\Tracking\Service\CompositeQuoteItemPriceResolver">
         <arguments>
             <argument name="quoteItemPriceResolversPool" xsi:type="array">
-                <item name="simple" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPrice</item>
-                <item name="bundle" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPrice</item>
-                <item name="grouped" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPrice</item>
-                <item name="configurable" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPrice</item>
-                <item name="virtual" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPrice</item>
-                <item name="downloadable" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPrice</item>
-                <item name="giftcard" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPrice</item>
+                <item name="simple" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPriceResolver</item>
+                <item name="bundle" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPriceResolver</item>
+                <item name="grouped" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPriceResolver</item>
+                <item name="configurable" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPriceResolver</item>
+                <item name="virtual" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPriceResolver</item>
+                <item name="downloadable" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPriceResolver</item>
+                <item name="giftcard" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPriceResolver</item>
             </argument>
+            <argument name="defaultPriceResolver" xsi:type="object">Searchspring\Tracking\Service\QuoteItemPriceResolver</argument>
         </arguments>
     </type>
 
-    <type name="Searchspring\Tracking\Service\SkuResolver">
+    <type name="Searchspring\Tracking\Service\CompositeSkuResolver">
         <arguments>
             <argument name="skuResolversPool" xsi:type="array">
                 <item name="simple" xsi:type="object">Searchspring\Tracking\Service\ProductSkuResolver</item>
@@ -42,6 +50,7 @@
                 <item name="downloadable" xsi:type="object">Searchspring\Tracking\Service\ProductSkuResolver</item>
                 <item name="giftcard" xsi:type="object">Searchspring\Tracking\Service\ProductSkuResolver</item>
             </argument>
+            <argument name="defaultSkuResolver" xsi:type="object">Searchspring\Tracking\Service\ProductSkuResolver</argument>
         </arguments>
     </type>
 </config>

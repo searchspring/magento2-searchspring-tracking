@@ -12,7 +12,7 @@ use Psr\Log\LoggerInterface;
  *
  * @package Searchspring\Tracking\Service
  */
-class SkuResolver implements SkuResolverInterface
+class CompositeSkuResolver implements SkuResolverInterface
 {
     /**
      * @var array
@@ -25,7 +25,7 @@ class SkuResolver implements SkuResolverInterface
     private $logger;
 
     /**
-     * @var DefaultSkuResolver
+     * @var SkuResolverInterface
      */
     private $defaultSkuResolver;
 
@@ -33,12 +33,12 @@ class SkuResolver implements SkuResolverInterface
      * SkuResolver constructor.
      *
      * @param LoggerInterface $logger
-     * @param DefaultSkuResolver $defaultSkuResolver
+     * @param SkuResolverInterface $defaultSkuResolver
      * @param array $skuResolversPool
      */
     public function __construct(
         LoggerInterface $logger,
-        DefaultSkuResolver $defaultSkuResolver,
+        SkuResolverInterface $defaultSkuResolver,
         array $skuResolversPool = []
     ) {
         $this->logger             = $logger;
