@@ -7,5 +7,6 @@
 **HOW MODULE WORKS ON CART PAGE**           | Searchspring Tracking module collect product SKUs and sends via AJAX to searchspring account. If product has parent, searchspring sends parent SKU. Also searchspring with SKUs sends price and quantity.
 **HOW MODULE WORKS ON SUCCESS PAGE**        | The same as in Cart Page case
 **HOW TO EXTEND**                           | You can add any product type for your needs. For example in di.xml to pool which you need, then you can create your resolver
+**REQUIRED VERSIONS**                       | PHP 7.2+, Magento 2.3.x/2.4.x
 
 
