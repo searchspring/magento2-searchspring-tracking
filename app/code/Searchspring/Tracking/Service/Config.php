@@ -12,6 +12,8 @@ use Searchspring\Tracking\Api\ConfigInterface;
 /**
  * Class Config
  *
+ * This class gets searchspring site id which entered from admin panel
+ *
  * @package Searchspring\Tracking\Service
  */
 class Config implements ConfigInterface

@@ -9,6 +9,8 @@ use Psr\Log\LoggerInterface;
 /**
  * Class QuoteItemPriceResolver
  *
+ * In di.xml we can configure quoteItemPriceResolversPool.This class can resolve way by which we will get product price for quote item (cart page).
+ *
  * @package Searchspring\Tracking\Service
  */
 class CompositeQuoteItemPriceResolver implements QuoteItemPriceResolverInterface

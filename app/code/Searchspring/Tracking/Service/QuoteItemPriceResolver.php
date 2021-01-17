@@ -8,6 +8,8 @@ use Magento\Quote\Api\Data\CartItemInterface;
 /**
  * Class QuoteItemPrice
  *
+ * This class gets price for quote item (cart page)
+ *
  * @package Searchspring\Tracking\Service
  */
 class QuoteItemPriceResolver implements QuoteItemPriceResolverInterface

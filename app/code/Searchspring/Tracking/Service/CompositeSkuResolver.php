@@ -10,6 +10,8 @@ use Psr\Log\LoggerInterface;
 /**
  * Class SkuResolver
  *
+ * In di.xml we can configure skuResolversPool.This class can resolve way by which we will get product SKU.
+ *
  * @package Searchspring\Tracking\Service
  */
 class CompositeSkuResolver implements SkuResolverInterface

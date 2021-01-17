@@ -13,6 +13,8 @@ use Magento\Framework\Serialize\SerializerInterface;
 /**
  * Class CartViewModel
  *
+ * This is view model for Cart Page
+ *
  * @package Searchspring\Tracking\ViewModel
  */
 class CartViewModel implements ArgumentInterface

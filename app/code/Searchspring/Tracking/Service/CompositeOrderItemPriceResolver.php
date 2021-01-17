@@ -9,6 +9,8 @@ use Psr\Log\LoggerInterface;
 /**
  * Class OrderItemPriceResolver
  *
+ * In di.xml we can configure orderItemPriceResolversPool.This class can resolve way by which we will get product price for order item (checkout success page).
+ *
  * @package Searchspring\Tracking\Service
  */
 class CompositeOrderItemPriceResolver implements OrderItemPriceResolverInterface

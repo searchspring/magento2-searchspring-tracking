@@ -11,6 +11,13 @@ use Searchspring\Tracking\Service\CompositeOrderItemPriceResolver;
 use Searchspring\Tracking\Service\CompositeSkuResolver;
 use Magento\Framework\Serialize\SerializerInterface;
 
+/**
+ * Class CheckoutViewModel
+ *
+ * This is view model for Checkout Success Page
+ *
+ * @package Searchspring\Tracking\ViewModel
+ */
 class CheckoutViewModel implements ArgumentInterface
 {
     /**

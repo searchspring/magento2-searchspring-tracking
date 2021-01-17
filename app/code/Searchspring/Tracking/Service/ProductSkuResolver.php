@@ -9,6 +9,8 @@ use Magento\Sales\Api\Data\OrderItemInterface;
 /**
  * Class ProductSkuResolver
  *
+ * This class gets SKU for product
+ *
  * @package Searchspring\Tracking\Service
  */
 class ProductSkuResolver implements SkuResolverInterface

@@ -9,6 +9,8 @@ use Searchspring\Tracking\Service\Config;
 /**
  * Class PdpViewModel
  *
+ * This is view model for Product Detail Page
+ *
  * @package Searchspring\Tracking\ViewModel
  */
 class PdpViewModel implements ArgumentInterface

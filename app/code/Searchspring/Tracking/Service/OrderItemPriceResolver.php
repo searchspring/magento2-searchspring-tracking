@@ -8,6 +8,8 @@ use Magento\Sales\Api\Data\OrderItemInterface;
 /**
  * Class OrderItemPrice
  *
+ * This class gets price for order item (checkout success page)
+ *
  * @package Searchspring\Tracking\Service
  */
 class OrderItemPriceResolver implements OrderItemPriceResolverInterface
