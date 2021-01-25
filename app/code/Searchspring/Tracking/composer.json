@@ -1,5 +1,5 @@
 {
-    "name": "searchspring/magento-2.x-extension-v1-tracking",
+    "name": "searchspring/magento2-searchspring-tracking",
     "description": "N/A",
     "require": {
         "magento/module-catalog": "103.0.*",
