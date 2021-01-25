@@ -1,6 +1,7 @@
 {
     "name": "searchspring/magento2-searchspring-tracking",
-    "description": "N/A",
+    "version": "1.0.0",
+    "description": "Magento 2 module for Searchspring product tracking",
     "require": {
         "magento/module-catalog": "103.0.*",
         "magento/module-checkout": "100.3.*",
