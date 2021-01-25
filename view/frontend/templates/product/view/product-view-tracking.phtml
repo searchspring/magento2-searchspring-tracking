@@ -1,0 +1,21 @@
+<?php
+/**
+ * @var $block \Magento\Catalog\Block\Product\View
+ * @var $viewModel \Searchspring\Tracking\ViewModel\PdpViewModel
+ */
+?>
+<?php $viewModel = $block->getData('searchspring_pdp_view_model'); ?>
+<?php $searchspringSiteId = $block->escapeHtmlAttr($viewModel->getSearchspringSiteId()); ?>
+
+<?php if (!empty($searchspringSiteId)): ?>
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "searchspring-tracking-product-view": {
+                    "siteId": "<?= $searchspringSiteId ?>",
+                    "sku":    "<?= $block->getProduct()->getSku() ?>"
+                }
+            }
+        }
+    </script>
+<?php endif; ?>
