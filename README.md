@@ -1,3 +1,17 @@
+# How to Install #
+
+1. Add the Searchspring Tracking repository to composer: `composer config repositories.searchspring git "https://github.com/searchspring/magento2-searchspring-tracking.git"`
+2. Require the Searchspring Tracking module: `composer require searchspring/magento2-searchspring-tracking`
+3. Install the Searchspring Tracking module: `bin/magento setup:upgrade`
+4. Configure the Searchspring Tracking module in the Magento 2 admin:
+    1. Navigate to Stores > Settings > Configuration
+    2. Navigate to Searchspring > Searchspring
+    3. Enter your Searchspring Site ID.
+    4. Click Save Config.
+5. Flush your Magento 2 cache: `bin/magento cache:flush`
+
+
+# Module Information #
 **MODULE**                                  | Searchspring_Tracking Magento 2 Module
 --------------------------------------------|----------------
 **DESCRIPTION**                             | The purpose of this module is to automatically install the Searchspring Intellisuggest tracking scripts onto a client’s Magento 2 site through the use of a module.
@@ -10,7 +24,7 @@
 **REQUIRED VERSIONS**                       | PHP 7.2+, Magento 2.3.x/2.4.x
 
 
-**HOW TO EXTEND**  
+# Extending the Module #
 
 In app/code/Searchspring/Tracking/etc/frontend/di.xml you can add your custom product type, for example
 
