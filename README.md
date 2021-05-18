@@ -28,18 +28,19 @@
 
 In app/code/Searchspring/Tracking/etc/frontend/di.xml you can add your custom product type, for example
 
-    <type name="Searchspring\Tracking\Service\CompositeOrderItemPriceResolver">
-        <arguments>
-            <argument name="orderItemPriceResolversPool" xsi:type="array">
-                <item name="yourProductType" xsi:type="object">Searchspring\Tracking\Service\YourProductTypeItemPriceResolver</item>
-            </argument>
-        </arguments>
-    </type>
+```xml
+<type name="Searchspring\Tracking\Service\CompositeOrderItemPriceResolver">
+    <arguments>
+        <argument name="orderItemPriceResolversPool" xsi:type="array">
+            <item name="yourProductType" xsi:type="object">Searchspring\Tracking\Service\YourProductTypeItemPriceResolver</item>
+        </argument>
+    </arguments>
+</type>
+```
 
-Then add to app/code/Searchspring/Tracking/Service directory your custom class, for example
+Then add to app/code/Searchspring/Tracking/Service directory your custom class, for example `YourProductTypeItemPriceResolver.php`:
 
-YourProductTypeItemPriceResolver.php
-
+```php
 class YourProductTypeItemPriceResolver implements OrderItemPriceResolverInterface
 {
     public function getProductPrice(OrderItemInterface $product): ?float
@@ -47,22 +48,24 @@ class YourProductTypeItemPriceResolver implements OrderItemPriceResolverInterfac
         //your custom code
     }
 }
+```
 
 
-Also you can do the same for quoteItem
+Also you can do the same for `quoteItem`:
 
-    <type name="Searchspring\Tracking\Service\CompositeOrderItemPriceResolver">
-        <arguments>
-            <argument name="quoteItemPriceResolversPool" xsi:type="array">
-                <item name="yourProductType" xsi:type="object">Searchspring\Tracking\Service\YourProductTypeItemPriceResolver</item>
-            </argument>
-        </arguments>
-    </type>
+```xml
+<type name="Searchspring\Tracking\Service\CompositeOrderItemPriceResolver">
+    <arguments>
+        <argument name="quoteItemPriceResolversPool" xsi:type="array">
+            <item name="yourProductType" xsi:type="object">Searchspring\Tracking\Service\YourProductTypeItemPriceResolver</item>
+        </argument>
+    </arguments>
+</type>
+```
 
-Then add to app/code/Searchspring/Tracking/Service directory your custom class, for example
+Then add to `app/code/Searchspring/Tracking/Service` directory your custom class, for example `YourProductTypeItemPriceResolver.php`:
 
-YourProductTypeItemPriceResolver.php
-
+```php
 class YourProductTypeItemPriceResolver implements QuoteItemPriceResolverInterface
 {
     public function getProductPrice(CartItemInterface $product): ?float
@@ -70,20 +73,24 @@ class YourProductTypeItemPriceResolver implements QuoteItemPriceResolverInterfac
         //your custom code
     }
 }
+```
 
 
-Also you can do the same for quoteItem
+Also you can do the same for `quoteItem`:
 
-    <type name="Searchspring\Tracking\Service\CompositeSkuResolver">
-        <arguments>
-            <argument name="skuResolversPool" xsi:type="array">
-                <item name="yourProductType" xsi:type="object">Searchspring\Tracking\Service\YourProductTypeSkuResolver</item>
-            </argument>
-        </arguments>
-    </type>
+```xml
+<type name="Searchspring\Tracking\Service\CompositeSkuResolver">
+    <arguments>
+        <argument name="skuResolversPool" xsi:type="array">
+            <item name="yourProductType" xsi:type="object">Searchspring\Tracking\Service\YourProductTypeSkuResolver</item>
+        </argument>
+    </arguments>
+</type>
+```
 
-YourProductTypeItemSkuResolver.php
+`YourProductTypeItemSkuResolver.php`:
 
+```php
 class YourProductTypeSkuResolver implements SkuResolverInterface
 { 
     public function getProductSku($product): ?string
@@ -91,4 +98,5 @@ class YourProductTypeSkuResolver implements SkuResolverInterface
         //your custom code
     }
 }
+```
 
