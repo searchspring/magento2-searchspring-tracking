@@ -100,3 +100,6 @@ class YourProductTypeSkuResolver implements SkuResolverInterface
 }
 ```
 
+# API Integrations #
+This module does not include product click tracking for search results. This click tracking is part of the Searchspring White Glove JavaScript Catalog. If you are doing a direct API integration you will need to manually integrate search results click tracking into your integration. You can find more information [here](https://searchspring.zendesk.com/hc/en-us/articles/201185129-Adding-IntelliSuggest-Tracking#productclicks).
+
