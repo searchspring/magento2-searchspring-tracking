@@ -56,7 +56,8 @@ class CompositeOrderItemPriceResolver implements OrderItemPriceResolverInterface
         if ((isset($this->orderItemPriceResolversPool[$product->getProductType()]) &&
                 $this->orderItemPriceResolversPool[$product->getProductType()] instanceof OrderItemPriceResolverInterface)) {
             return (float)$this->orderItemPriceResolversPool[$product->getProductType()]->getProductPrice($product);
-        } elseif (!($this->orderItemPriceResolversPool[$product->getProductType()] instanceof OrderItemPriceResolverInterface)) {
+        } elseif (isset($this->orderItemPriceResolversPool[$product->getProductType()]) && 
+                  !($this->orderItemPriceResolversPool[$product->getProductType()] instanceof OrderItemPriceResolverInterface)) {
             $this->logger->warning(get_class($this->orderItemPriceResolversPool[$product->getProductType()]) . ' must implement ' . OrderItemPriceResolverInterface::class);
         }
 
