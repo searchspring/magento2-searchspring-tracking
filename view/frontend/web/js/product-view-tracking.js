@@ -1,7 +1,8 @@
 define([
     'consoleLogger',
+    'Magento_Customer/js/customer-data',
     'intelliSuggest'
-], function (consoleLogger) {
+], function (consoleLogger, customerData) {
     'use strict';
 
     return function (config) {
@@ -9,7 +10,8 @@ define([
 
         var sku    = config.sku;
         var siteId = config.siteId;
-
+        var trackingData = customerData.get('searchspring-tracking')();
+        var shopperId = trackingData.shopper_id;
         try {
             IntelliSuggest.init({
                 siteId: siteId,
@@ -18,6 +20,9 @@ define([
                     sku
                 ]
             });
+            if (shopperId) {
+                IntelliSuggest.setShopperId(shopperId);
+            }
             IntelliSuggest.viewItem({
                 sku: sku
             });

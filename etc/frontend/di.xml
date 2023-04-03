@@ -53,4 +53,12 @@
             <argument name="defaultSkuResolver" xsi:type="object">Searchspring\Tracking\Service\ProductSkuResolver</argument>
         </arguments>
     </type>
+
+    <type name="Magento\Customer\CustomerData\SectionPoolInterface">
+        <arguments>
+            <argument name="sectionSourceMap" xsi:type="array">
+                <item name="searchspring-tracking" xsi:type="string">Searchspring\Tracking\CustomerData\Tracking</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
