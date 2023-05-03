@@ -1,8 +1,9 @@
 define([
     'consoleLogger',
     'itemsTracking',
-    'intelliSuggest'
-], function (consoleLogger, itemsTracking) {
+    'Magento_Customer/js/customer-data',
+    'intelliSuggest',
+], function (consoleLogger, itemsTracking, customerData) {
     'use strict';
 
     return function (config) {
@@ -11,6 +12,8 @@ define([
         var siteId     = config.siteId;
         var productArr = config.products;
         var skuArr     = config.sku;
+        var trackingData = customerData.get('searchspring-tracking')();
+        var shopperId = trackingData.shopper_id;
 
         try {
             IntelliSuggest.init({
@@ -18,6 +21,9 @@ define([
                 context: 'Basket',
                 seed: skuArr
             });
+            if (shopperId) {
+                IntelliSuggest.setShopperId(shopperId);
+            }
             itemsTracking(productArr)
             IntelliSuggest.inBasket({});
         } catch (err) {
