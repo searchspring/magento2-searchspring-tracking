@@ -13,7 +13,8 @@
             "*": {
                 "searchspring-tracking-checkout-success": {
                     "siteId":  "<?= $searchspringSiteId ?>",
-                    "products": <?= $viewModel->getProducts() ?>
+                    "products": <?= $viewModel->getProducts() ?>,
+                    "orderId": "<?= $viewModel->getOrderId() ?>"
                 }
             }
         }

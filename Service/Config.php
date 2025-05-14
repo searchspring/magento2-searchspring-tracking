@@ -48,7 +48,7 @@ class Config implements ConfigInterface
      * @param int|null $storeId
      * @return string|null
      */
-    public function getSearchspringSiteId(int $storeId = null): ?string
+    public function getSearchspringSiteId(?int $storeId = null): ?string
     {
         return (string)$this->scopeConfig->getValue(
             self::SEARCHSPRING_SITE_ID,

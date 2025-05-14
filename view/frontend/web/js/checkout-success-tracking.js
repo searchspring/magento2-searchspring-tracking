@@ -22,7 +22,9 @@ define([
                 IntelliSuggest.setShopperId(shopperId);
             }
             itemsTracking(productArr)
-            IntelliSuggest.inSale({});
+            IntelliSuggest.inSale({
+                orderId:config.orderId || null
+            });
         } catch (err) {
             consoleLogger.error(err)
         }
