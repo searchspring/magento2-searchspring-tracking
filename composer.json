@@ -3,7 +3,6 @@
     "version": "1.0.0",
     "description": "Magento 2 module for Searchspring product tracking",
     "require": {
-        "php": "~7.1.0|~7.2.0|~7.3.0|~7.4.0|~8.0.0|~8.1.0|~8.2.0|~8.3.0|~8.4.0",
         "magento/module-catalog": ">=103.0.0",
         "magento/module-checkout": ">=100.3.0",
         "magento/module-config": ">=101.1.0",
