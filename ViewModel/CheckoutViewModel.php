@@ -111,4 +111,18 @@ class CheckoutViewModel implements ArgumentInterface
     {
         return (int)$orderItem->getQtyOrdered();
     }
+
+    /**
+     * @return int|null
+     */
+    public function getOrderId(): ?int
+    {
+        $order = $this->checkoutSession->getLastRealOrder();
+
+        if($order) {
+            return (int)$order->getDataUsingMethod('id');
+        }
+
+        return null;
+    }
 }
