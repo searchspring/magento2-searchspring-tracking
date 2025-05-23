@@ -56,7 +56,8 @@ class CompositeQuoteItemPriceResolver implements QuoteItemPriceResolverInterface
         if ((isset($this->quoteItemPriceResolversPool[$product->getProductType()]) &&
             $this->quoteItemPriceResolversPool[$product->getProductType()] instanceof QuoteItemPriceResolverInterface)) {
             return (float)$this->quoteItemPriceResolversPool[$product->getProductType()]->getProductPrice($product);
-        } elseif (!($this->quoteItemPriceResolversPool[$product->getProductType()] instanceof QuoteItemPriceResolverInterface)) {
+        } elseif (isset($this->quoteItemPriceResolversPool[$product->getProductType()]) && 
+                  !($this->quoteItemPriceResolversPool[$product->getProductType()] instanceof QuoteItemPriceResolverInterface)) {
             $this->logger->warning(get_class($this->quoteItemPriceResolversPool[$product->getProductType()]) . ' must implement ' . QuoteItemPriceResolverInterface::class);
         }
 
