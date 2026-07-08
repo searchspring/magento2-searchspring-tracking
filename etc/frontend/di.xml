@@ -58,6 +58,7 @@
         <arguments>
             <argument name="sectionSourceMap" xsi:type="array">
                 <item name="searchspring-tracking" xsi:type="string">Searchspring\Tracking\CustomerData\Tracking</item>
+                <item name="searchspring_pagemeta_cart" xsi:type="string">Searchspring\Tracking\CustomerData\PageMetaCart</item>
             </argument>
         </arguments>
     </type>

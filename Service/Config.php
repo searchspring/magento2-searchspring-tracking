@@ -19,6 +19,7 @@ use Searchspring\Tracking\Api\ConfigInterface;
 class Config implements ConfigInterface
 {
     const SEARCHSPRING_SITE_ID = 'serchspring/general/searchspring_site_id';
+    const SEARCHSPRING_TRACKING_SCRIPT_SRC = 'serchspring/tracking/script_src';
 
     /**
      * @var ScopeConfigInterface
@@ -37,9 +38,10 @@ class Config implements ConfigInterface
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
+        ScopeConfigInterface  $scopeConfig,
         StoreManagerInterface $storeManager
-    ) {
+    )
+    {
         $this->scopeConfig = $scopeConfig;
         $this->storeManager = $storeManager;
     }
@@ -48,12 +50,36 @@ class Config implements ConfigInterface
      * @param int|null $storeId
      * @return string|null
      */
-    public function getSearchspringSiteId(int $storeId = null): ?string
+    public function getSearchspringSiteId(?int $storeId = null): ?string
     {
         return (string)$this->scopeConfig->getValue(
             self::SEARCHSPRING_SITE_ID,
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrackingScriptSrc(?int $storeId = null): string
+    {
+        $url = (string)$this->scopeConfig->getValue(
+            self::SEARCHSPRING_TRACKING_SCRIPT_SRC,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+        if (empty($url)) {
+            $url = 'https://cdn.athoscommerce.net/analytics/beacon.js';
+        }
+        return $url;
+    }
+
+    /**
+     * @return bool
+     */
+    public function shouldRender(): bool
+    {
+        return $this->getSiteId() && $this->getTrackingScriptSrc();
     }
 }
