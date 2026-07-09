@@ -6,7 +6,7 @@ namespace Searchspring\Tracking\Logger;
 use Magento\Framework\Filesystem\DriverInterface;
 use Magento\Framework\Logger\Handler\Base;
 use Monolog\Logger;
-use Searchspring\Tracking\Model\Config as ConfigModel;
+use Searchspring\Tracking\Service\Config as ConfigModel;
 
 class Handler extends Base
 {

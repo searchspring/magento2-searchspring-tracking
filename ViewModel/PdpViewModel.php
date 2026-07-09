@@ -20,7 +20,7 @@ namespace Searchspring\Tracking\ViewModel;
 
 use Searchspring\Tracking\Logger\TrackingLogger;
 use Searchspring\Tracking\Service\Config;
-use Searchspring\Tracking\Service\Tracking\IdProviderInterface;
+use Searchspring\Tracking\Service\IdProviderInterface;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\Registry;
 use Magento\Framework\Serialize\SerializerInterface;
@@ -100,9 +100,6 @@ class PdpViewModel implements ArgumentInterface
             ? (string)$parentId
             : $uid;
 
-        if ($parentId !== $uid) {
-            $uid = $parentId . '_' . $uid;
-        }
 
         $data = $this->serializer->serialize([
             'uid' => (string)$uid,

@@ -4,7 +4,7 @@ namespace Searchspring\Tracking\ViewModel;
 
 use Searchspring\Tracking\Logger\TrackingLogger;
 use Searchspring\Tracking\Service\Config;
-use Searchspring\Tracking\Service\Tracking\OrderDataResolverInterface;
+use Searchspring\Tracking\Service\OrderDataResolverInterface;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;

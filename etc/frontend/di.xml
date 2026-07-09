@@ -9,6 +9,17 @@
     <preference for="Searchspring\Tracking\Service\SkuResolverInterface"
                 type="Searchspring\Tracking\Service\CompositeSkuResolver" />
 
+
+
+    <preference for="Searchspring\Tracking\Service\OrderLineItemResolverInterface"
+                type="Searchspring\Tracking\Service\CompositeOrderLineItemResolver" />
+    <preference for="Searchspring\Tracking\Service\OrderDataResolverInterface"
+                type="Searchspring\Tracking\Service\OrderDataResolver" />
+    <preference for="Searchspring\Tracking\Service\OrderItemIdResolverInterface"
+                type="Searchspring\Tracking\Service\OrderItemIdResolver" />
+    <preference for="Searchspring\Tracking\Service\OrderItemParentIdResolverInterface"
+                type="Searchspring\Tracking\Service\OrderItemParentIdResolver" />
+
     <type name="Searchspring\Tracking\Service\CompositeOrderItemPriceResolver">
         <arguments>
             <argument name="orderItemPriceResolversPool" xsi:type="array">

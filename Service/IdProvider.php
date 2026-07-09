@@ -16,9 +16,9 @@
 
 declare(strict_types=1);
 
-namespace Searchspring\Tracking\Service\Tracking;
+namespace Searchspring\Tracking\Service;
 
-use Searchspring\Tracking\Service\Tracking\IdProviderInterface;
+use Searchspring\Tracking\Service\IdProviderInterface;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\ConfigurableProduct\Api\LinkManagementInterface;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;

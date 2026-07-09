@@ -16,7 +16,7 @@
 
 declare(strict_types=1);
 
-namespace Searchspring\Tracking\Service\Tracking;
+namespace Searchspring\Tracking\Service;
 
 use Magento\Catalog\Model\Product\Type;
 use Magento\Sales\Api\Data\OrderItemInterface;

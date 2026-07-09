@@ -18,27 +18,15 @@ declare(strict_types=1);
 
 namespace Searchspring\Tracking\Service;
 
-use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Sales\Api\Data\OrderInterface;
 
-interface IdProviderInterface
+interface OrderDataResolverInterface
 {
     /**
-     * @param ProductInterface $product
+     * Resolve an order into tracking payload data.
      *
-     * @return string
+     * @param OrderInterface $order
+     * @return array<string, mixed>
      */
-    public function getItemId(ProductInterface $product): string;
-
-    /**
-     * @param ProductInterface $product
-     *
-     * @return string
-     */
-    public function getItemParentId(ProductInterface $product): string;
-
-    /**
-     * @param ProductInterface $product
-     * @return string
-     */
-    public function getItemSku(ProductInterface $product): string;
+    public function resolve(OrderInterface $order): array;
 }

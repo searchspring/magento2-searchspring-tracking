@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2025 Searchspring <https://searchspring.com>
  * This program is free software: you can redistribute it and/or modify
@@ -18,27 +19,18 @@ declare(strict_types=1);
 
 namespace Searchspring\Tracking\Service;
 
-use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Sales\Api\Data\OrderItemInterface;
 
-interface IdProviderInterface
+class OrderItemIdResolver implements OrderItemIdResolverInterface
 {
     /**
-     * @param ProductInterface $product
-     *
-     * @return string
+     * @param OrderItemInterface $orderItem
+     * @return string|null
      */
-    public function getItemId(ProductInterface $product): string;
-
-    /**
-     * @param ProductInterface $product
-     *
-     * @return string
-     */
-    public function getItemParentId(ProductInterface $product): string;
-
-    /**
-     * @param ProductInterface $product
-     * @return string
-     */
-    public function getItemSku(ProductInterface $product): string;
+    public function resolve(OrderItemInterface $orderItem): ?string
+    {
+        return $orderItem->getProductId() !== null
+            ? (string)$orderItem->getProductId()
+            : null;
+    }
 }

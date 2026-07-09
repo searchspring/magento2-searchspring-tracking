@@ -7,7 +7,7 @@
                    name="searchspring.tracking.product.page.data"
                    template="Searchspring_Tracking::tracking/product-page.phtml">
                 <arguments>
-                    <argument name="global_script_view_model" xsi:type="object">SearchspringTracking\ViewModel\GlobalScriptViewModel</argument>
+                    <argument name="global_script_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\GlobalScriptViewModel</argument>
                     <argument name="product_page_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\PdpViewModel</argument>
                     <argument name="escaper_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\Escaper</argument>
                 </arguments>

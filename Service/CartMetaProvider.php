@@ -61,7 +61,7 @@ class CartMetaProvider
      */
     public function __construct(
         CheckoutSession          $checkoutSession,
-        TrackingLogger      $logger,
+        TrackingLogger           $logger,
         CartItemIdentityResolver $trackingMetaResolver,
         RequestInterface         $request,
         ?array                   $outputOnRoutes = null
@@ -154,9 +154,6 @@ class CartMetaProvider
             ? (string)$parentId
             : $uid;
 
-        if ($parentId !== $uid) {
-            $uid = $parentId . '_' . $uid;
-        }
         $sku = (string)$this->trackingMetaResolver->getSku($cartItem);
 
         return [

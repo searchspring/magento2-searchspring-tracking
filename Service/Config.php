@@ -20,6 +20,7 @@ class Config implements ConfigInterface
 {
     const SEARCHSPRING_SITE_ID = 'serchspring/general/searchspring_site_id';
     const SEARCHSPRING_TRACKING_SCRIPT_SRC = 'serchspring/tracking/script_src';
+    const SEARCHSPRING_DEBUG_LOG_ENABLED = 'serchspring/tracking/enable_debug_log';
 
     /**
      * @var ScopeConfigInterface
@@ -60,6 +61,15 @@ class Config implements ConfigInterface
     }
 
     /**
+     * @param int|null $storeId
+     * @return string|null
+     */
+    public function getSiteId(?int $storeId = null): ?string
+    {
+        return $this->getSearchspringSiteId($storeId);
+    }
+
+    /**
      * @return string
      */
     public function getTrackingScriptSrc(?int $storeId = null): string
@@ -73,6 +83,19 @@ class Config implements ConfigInterface
             $url = 'https://cdn.athoscommerce.net/analytics/beacon.js';
         }
         return $url;
+    }
+
+    /**
+     * @param int|null $storeId
+     * @return bool
+     */
+    public function isDebugLogEnabled(?int $storeId = null): bool
+    {
+        return (bool)$this->scopeConfig->getValue(
+            self::SEARCHSPRING_DEBUG_LOG_ENABLED,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
     }
 
     /**
