@@ -44,7 +44,13 @@ $scriptString = "
                     return;
                 }
 
-                window.athos.tracker.setShopperId(shopperId);
+                if (
+                    window.athos &&
+                    window.athos.tracker &&
+                    typeof window.athos.tracker.setShopperId === 'function'
+                ) {
+                    window.athos.tracker.setShopperId(shopperId);
+                }
                 localStorage.setItem('searchspringMagentoShopperLastTime', now);
                 localStorage.setItem('searchspringMagentoShopperLastId', shopperId);
             }

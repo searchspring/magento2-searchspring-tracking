@@ -17,7 +17,7 @@
 
 declare(strict_types=1);
 
-namespace SearchSpring\Tracking\CustomerData;
+namespace Searchspring\Tracking\CustomerData;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
 use Magento\Customer\Model\Session;
