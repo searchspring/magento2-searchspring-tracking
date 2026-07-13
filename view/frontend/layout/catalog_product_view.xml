@@ -5,6 +5,7 @@
         <referenceContainer name="before.body.end">
             <block class="Magento\Framework\View\Element\Template"
                    name="searchspring.tracking.product.page.data"
+                   after="searchspring.tracking.page.global"
                    template="Searchspring_Tracking::tracking/product-page.phtml">
                 <arguments>
                     <argument name="global_script_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\GlobalScriptViewModel</argument>

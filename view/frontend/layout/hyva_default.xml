@@ -2,36 +2,44 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
+        <!--<referenceBlock name="searchspring.tracking.page.global" remove="true"/>-->
+        <referenceBlock name="searchspring.tracking.page.shopperId" remove="true"/>
+        <referenceBlock name="searchspring.customer.data.cart.tracker.state" remove="true"/>
+        <referenceBlock name="searchspring.customer.data.cart.tracker.listener" remove="true"/>
+
         <referenceContainer name="before.body.end">
-            <block class="Magento\Framework\View\Element\Template"
-                   name="searchspring.tracking.page.global"
+            <!--<block class="Magento\Framework\View\Element\Template"
+                   name="searchspring.hyva.tracking.global"
                    template="Searchspring_Tracking::tracking/global-script.phtml">
                 <arguments>
                     <argument name="global_script_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\GlobalScriptViewModel</argument>
                     <argument name="escaper_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\Escaper</argument>
                 </arguments>
-            </block>
+            </block>-->
+
             <block class="Magento\Framework\View\Element\Template"
-                   name="searchspring.tracking.page.shopperId"
+                   name="searchspring.hyva.tracking.shopperId"
                    template="Searchspring_Tracking::tracking/shopper-id.phtml">
                 <arguments>
                     <argument name="global_script_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\GlobalScriptViewModel</argument>
                     <argument name="escaper_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\Escaper</argument>
-                    <argument name="shopper_id_timeout" xsi:type="number">3600000</argument><!-- 1 hour in milliseconds -->
+                    <argument name="shopper_id_timeout" xsi:type="number">3600000</argument>
                 </arguments>
             </block>
+
             <block class="Magento\Framework\View\Element\Template"
-                   name="searchspring.customer.data.cart.tracker.state"
-                   template="Searchspring_Tracking::tracking/mini-cart-actions-state.phtml">
+                   name="searchspring.hyva.tracking.cart.state"
+                   template="Searchspring_Tracking::hyva/tracking/cart-state.phtml">
                 <arguments>
                     <argument name="global_script_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\GlobalScriptViewModel</argument>
                     <argument name="escaper_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\Escaper</argument>
                 </arguments>
             </block>
+
             <block class="Magento\Framework\View\Element\Template"
-                   name="searchspring.customer.data.cart.tracker.listener"
-                   template="Searchspring_Tracking::tracking/mini-cart-actions-listener.phtml"
-                   after="searchspring.customer.data.cart.tracker.state">
+                   name="searchspring.hyva.tracking.cart.listener"
+                   template="Searchspring_Tracking::hyva/tracking/cart-listener.phtml"
+                   after="searchspring.hyva.tracking.cart.state">
                 <arguments>
                     <argument name="global_script_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\GlobalScriptViewModel</argument>
                     <argument name="escaper_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\Escaper</argument>
