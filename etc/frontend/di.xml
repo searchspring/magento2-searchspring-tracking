@@ -2,8 +2,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Searchspring\Tracking\Api\GetSearchspringSiteIdInterface"
                 type="Searchspring\Tracking\Service\Config" />
-    <preference for="Searchspring\Tracking\Service\QuoteItemPriceResolverInterface"
-                type="Searchspring\Tracking\Service\CompositeQuoteItemPriceResolver" />
     <preference for="Searchspring\Tracking\Service\OrderItemPriceResolverInterface"
                 type="Searchspring\Tracking\Service\CompositeOrderItemPriceResolver" />
     <preference for="Searchspring\Tracking\Service\SkuResolverInterface"
