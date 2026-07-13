@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (C) 2025 Searchspring <https://searchspring.com>
  * This program is free software: you can redistribute it and/or modify
@@ -17,17 +16,29 @@
 
 declare(strict_types=1);
 
-namespace Searchspring\Tracking\Api;
+namespace Searchspring\Tracking\Service;
 
-/**
- * Interface ConfigInterface
- *
- * @package Searchspring\Tracking\Api
- */
-interface ConfigInterface
+use Magento\Catalog\Api\Data\ProductInterface;
+
+interface IdProviderInterface
 {
     /**
-     * @return string|null
+     * @param ProductInterface $product
+     *
+     * @return string
      */
-    public function getSearchspringSiteId(): ?string;
+    public function getItemId(ProductInterface $product): string;
+
+    /**
+     * @param ProductInterface $product
+     *
+     * @return string
+     */
+    public function getItemParentId(ProductInterface $product): string;
+
+    /**
+     * @param ProductInterface $product
+     * @return string
+     */
+    public function getItemSku(ProductInterface $product): string;
 }

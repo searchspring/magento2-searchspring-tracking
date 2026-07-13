@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (C) 2025 Searchspring <https://searchspring.com>
  * This program is free software: you can redistribute it and/or modify
@@ -17,17 +16,31 @@
 
 declare(strict_types=1);
 
-namespace Searchspring\Tracking\Api;
+namespace Searchspring\Tracking\ViewModel;
 
-/**
- * Interface ConfigInterface
- *
- * @package Searchspring\Tracking\Api
- */
-interface ConfigInterface
+use Magento\Framework\Escaper as FrameworkEscaper;
+use Magento\Framework\View\Element\Block\ArgumentInterface;
+
+class Escaper implements ArgumentInterface
 {
     /**
-     * @return string|null
+     * @var FrameworkEscaper
      */
-    public function getSearchspringSiteId(): ?string;
+    private $escaper;
+
+    /**
+     * @param FrameworkEscaper $escaper
+     */
+    public function __construct(FrameworkEscaper $escaper)
+    {
+        $this->escaper = $escaper;
+    }
+
+    /**
+     * @return FrameworkEscaper
+     */
+    public function getEscaper(): FrameworkEscaper
+    {
+        return $this->escaper;
+    }
 }

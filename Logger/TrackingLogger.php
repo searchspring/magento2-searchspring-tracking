@@ -17,17 +17,12 @@
 
 declare(strict_types=1);
 
-namespace Searchspring\Tracking\Api;
+namespace Searchspring\Tracking\Logger;
 
-/**
- * Interface ConfigInterface
- *
- * @package Searchspring\Tracking\Api
- */
-interface ConfigInterface
+use Searchspring\Tracking\Api\LoggerInterface;
+use Monolog\Logger as MonologLogger;
+
+class TrackingLogger extends MonologLogger implements LoggerInterface
 {
-    /**
-     * @return string|null
-     */
-    public function getSearchspringSiteId(): ?string;
+
 }

@@ -1,0 +1,87 @@
+<?php
+declare(strict_types=1);
+
+use Searchspring\Tracking\ViewModel\Escaper;
+use Searchspring\Tracking\ViewModel\GlobalScriptViewModel;
+use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Helper\SecureHtmlRenderer;
+
+/** @var Template $block */
+/** @var GlobalScriptViewModel $globalScriptViewModel */
+/** @var SecureHtmlRenderer $secureRenderer */
+/** @var Escaper $escaperViewModel */
+
+$globalScriptViewModel = $block->getGlobalScriptViewModel();
+$escaperViewModel = $block->getEscaperViewModel();
+$escaper = $escaperViewModel->getEscaper();
+
+if (!$globalScriptViewModel || !$globalScriptViewModel->shouldRender()) {
+    return;
+}
+
+$scriptString = <<<JS
+(function (window) {
+    'use strict';
+
+    var state = window.searchspringMagentoHyvaCartTrackerState;
+    var previousSnapshot = null;
+
+    if (!state) {
+        return;
+    }
+
+    function readSearchspringCartSnapshot() {
+        try {
+            var raw = localStorage.getItem('mage-cache-storage');
+            var storage = raw ? JSON.parse(raw) : {};
+            return storage['searchspring_pagemeta_cart'] || storage['searchspring-pagemeta-cart'] || {};
+        } catch (e) {
+            return {};
+        }
+    }
+
+    function processSnapshot() {
+        var currentSnapshot = state.clone(readSearchspringCartSnapshot());
+
+        if (previousSnapshot === null) {
+            previousSnapshot = currentSnapshot;
+            return;
+        }
+
+        if (state.areItemsEqual(previousSnapshot, currentSnapshot)) {
+            previousSnapshot = currentSnapshot;
+            return;
+        }
+
+        state.diffSnapshots(previousSnapshot, currentSnapshot);
+        previousSnapshot = currentSnapshot;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        window.setTimeout(processSnapshot, 300);
+    });
+
+    window.addEventListener('private-content-loaded', function () {
+        window.setTimeout(processSnapshot, 50);
+    });
+
+    window.addEventListener('reload-customer-section-data', function () {
+        window.setTimeout(processSnapshot, 300);
+    });
+
+    window.addEventListener('searchspring:hyva:cart:refresh', function () {
+        window.setTimeout(processSnapshot, 50);
+    });
+}(window));
+JS;
+?>
+
+<?= /* @noEscape */ $secureRenderer->renderTag(
+    'script',
+    [
+        'type' => 'text/javascript',
+        'id' => 'searchspring_hyva_tracking_cart_listener',
+    ],
+    $scriptString,
+    false
+) ?>

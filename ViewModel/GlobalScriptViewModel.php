@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (C) 2025 Searchspring <https://searchspring.com>
  * This program is free software: you can redistribute it and/or modify
@@ -17,35 +16,49 @@
 
 declare(strict_types=1);
 
-namespace Searchspring\Tracking\CustomerData;
+namespace Searchspring\Tracking\ViewModel;
 
-use Magento\Customer\CustomerData\SectionSourceInterface;
-use Magento\Customer\Model\Session;
+use Magento\Framework\View\Element\Block\ArgumentInterface;
+use Searchspring\Tracking\Service\Config;
 
-class Tracking implements SectionSourceInterface
+class GlobalScriptViewModel implements ArgumentInterface
 {
     /**
-     * @var Session
+     * @var Config
      */
-    private $session;
+    private $config;
 
     /**
-     * Tracking constructor.
-     * @param Session $session
+     * @param Config $config
      */
     public function __construct(
-        Session $session
-    ) {
-        $this->session = $session;
+        Config $config
+    )
+    {
+        $this->config = $config;
     }
 
     /**
-     * @return array|void
+     * @return string|null
      */
-    public function getSectionData() : array
+    public function getSiteId(): ?string
     {
-        return [
-            'shopper_id' => $this->session->getCustomerId()
-        ];
+        return (string)$this->config->getSiteId();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrackingScriptSrc(): string
+    {
+        return $this->config->getTrackingScriptSrc();
+    }
+
+    /**
+     * @return bool
+     */
+    public function shouldRender(): bool
+    {
+        return $this->config->shouldRender();
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (C) 2025 Searchspring <https://searchspring.com>
  * This program is free software: you can redistribute it and/or modify
@@ -17,17 +16,33 @@
 
 declare(strict_types=1);
 
-namespace Searchspring\Tracking\Api;
+namespace Searchspring\Tracking\CustomerData;
 
-/**
- * Interface ConfigInterface
- *
- * @package Searchspring\Tracking\Api
- */
-interface ConfigInterface
+use Searchspring\Tracking\Service\CartMetaProvider;
+use Magento\Customer\CustomerData\SectionSourceInterface;
+
+class PageMetaCart implements SectionSourceInterface
 {
     /**
-     * @return string|null
+     * @var CartMetaProvider
      */
-    public function getSearchspringSiteId(): ?string;
+    private $cartMetaProvider;
+
+    /**
+     * @param CartMetaProvider $cartMetaProvider
+     */
+    public function __construct(
+        CartMetaProvider $cartMetaProvider
+    )
+    {
+        $this->cartMetaProvider = $cartMetaProvider;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSectionData(): array
+    {
+        return $this->cartMetaProvider->get();
+    }
 }

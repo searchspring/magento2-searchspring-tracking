@@ -2,13 +2,15 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceContainer name="content">
-            <block class="Magento\Catalog\Block\Product\View" name="searchspring.tracking.product.info"
-                   template="Searchspring_Tracking::product/view/product-view-tracking.phtml" after="product.info">
+        <referenceContainer name="before.body.end">
+            <block class="Magento\Framework\View\Element\Template"
+                   name="searchspring.tracking.product.page.data"
+                   after="searchspring.tracking.page.global"
+                   template="Searchspring_Tracking::tracking/product-page.phtml">
                 <arguments>
-                    <argument name="searchspring_pdp_view_model"
-                              xsi:type="object">Searchspring\Tracking\ViewModel\PdpViewModel
-                    </argument>
+                    <argument name="global_script_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\GlobalScriptViewModel</argument>
+                    <argument name="product_page_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\PdpViewModel</argument>
+                    <argument name="escaper_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\Escaper</argument>
                 </arguments>
             </block>
         </referenceContainer>

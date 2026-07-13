@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (C) 2025 Searchspring <https://searchspring.com>
  * This program is free software: you can redistribute it and/or modify
@@ -17,17 +16,19 @@
 
 declare(strict_types=1);
 
-namespace Searchspring\Tracking\Api;
+namespace Searchspring\Tracking\Service;
 
-/**
- * Interface ConfigInterface
- *
- * @package Searchspring\Tracking\Api
- */
-interface ConfigInterface
+use Magento\Sales\Api\Data\OrderItemInterface;
+
+interface OrderLineItemResolverInterface
 {
     /**
-     * @return string|null
+     * Resolve an order item into tracking payload data.
+     *
+     * Return null when the item should be skipped.
+     *
+     * @param OrderItemInterface $orderItem
+     * @return array<string, mixed>|null
      */
-    public function getSearchspringSiteId(): ?string;
+    public function resolve(OrderItemInterface $orderItem): ?array;
 }

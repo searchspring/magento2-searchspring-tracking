@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (C) 2025 Searchspring <https://searchspring.com>
  * This program is free software: you can redistribute it and/or modify
@@ -17,17 +16,17 @@
 
 declare(strict_types=1);
 
-namespace Searchspring\Tracking\Api;
+namespace Searchspring\Tracking\Service;
 
-/**
- * Interface ConfigInterface
- *
- * @package Searchspring\Tracking\Api
- */
-interface ConfigInterface
+use Magento\Sales\Api\Data\OrderItemInterface;
+
+interface OrderItemIdResolverInterface
 {
     /**
+     * Resolve the public item identifier.
+     *
+     * @param OrderItemInterface $orderItem
      * @return string|null
      */
-    public function getSearchspringSiteId(): ?string;
+    public function resolve(OrderItemInterface $orderItem): ?string;
 }

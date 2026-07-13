@@ -3,5 +3,6 @@
     <body>
         <!-- Removing to prevent duplicate tracking due to cart page loading -->
         <referenceBlock name="searchspring.customer.data.cart.tracker.listener" remove="true"/>
+        <referenceBlock name="searchspring.hyva.tracking.cart.listener" remove="true"/>
     </body>
 </page>
