@@ -2,21 +2,11 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <!--<referenceBlock name="searchspring.tracking.page.global" remove="true"/>-->
         <referenceBlock name="searchspring.tracking.page.shopperId" remove="true"/>
         <referenceBlock name="searchspring.customer.data.cart.tracker.state" remove="true"/>
         <referenceBlock name="searchspring.customer.data.cart.tracker.listener" remove="true"/>
 
         <referenceContainer name="before.body.end">
-            <!--<block class="Magento\Framework\View\Element\Template"
-                   name="searchspring.hyva.tracking.global"
-                   template="Searchspring_Tracking::tracking/global-script.phtml">
-                <arguments>
-                    <argument name="global_script_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\GlobalScriptViewModel</argument>
-                    <argument name="escaper_view_model" xsi:type="object">Searchspring\Tracking\ViewModel\Escaper</argument>
-                </arguments>
-            </block>-->
-
             <block class="Magento\Framework\View\Element\Template"
                    name="searchspring.hyva.tracking.shopperId"
                    template="Searchspring_Tracking::tracking/shopper-id.phtml">
